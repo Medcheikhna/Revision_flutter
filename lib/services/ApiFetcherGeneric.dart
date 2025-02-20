@@ -3,17 +3,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:newtest/model/user_model.dart';
 import 'package:newtest/services/exception.dart';
 
 class Fetcher {
+  static const String baseUrl = 'https://jsonplaceholder.typicode.com/users';
+  late final Map<String, String> headers;
   // GET method
-  Future get(String endpoint) async {
+  Future<List<User>> get() async {
     try {
-      final response = await http.get(Uri.parse(endpoint));
+      final response = await http.get(Uri.parse(baseUrl), headers: headers);
 
       if (response.statusCode == 200) {
-        await Future.delayed(Duration(seconds: 3));
-        return json.decode(response.body);
+        List<dynamic> data = jsonDecode(response.body);
+        return data.map((json) => User.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load data');
       }
@@ -41,13 +44,27 @@ class Fetcher {
     }
   }
 
+  Future<User?> getUser(int id) async {
+    try {
+      final response =
+          await http.get(Uri.parse('$baseUrl/$id'), headers: headers);
+      if (response.statusCode == 200) {
+        return User.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to load user');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   // POST method
-  Future post(Map<String, dynamic> body) async {
+  Future<User> post(User user) async {
     try {
       final response = await http.post(
-        Uri.parse("https://jsonplaceholder.typicode.com/users"),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(body),
+        Uri.parse(baseUrl),
+        headers: {...headers, 'Content-Type': 'application/json'},
+        body: jsonEncode(user.toJson()),
       );
       print('Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
@@ -81,18 +98,15 @@ class Fetcher {
   }
 
   // PUT method
-  Future put(String endpoint, Map<String, dynamic> body) async {
+  Future<User?> put(int id, User user) async {
     try {
       final response = await http.put(
-        Uri.parse(endpoint),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(body),
+        Uri.parse('$baseUrl/$id'),
+        headers: {...headers, 'Content-Type': 'application/json'},
+        body: jsonEncode(user.toJson()),
       );
-      print('object response ${response.statusCode}');
-      print('object response ${response.body}');
-
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        return User.fromJson(jsonDecode(response.body));
       } else {
         throw Exception('Failed to update data');
       }
@@ -123,9 +137,10 @@ class Fetcher {
   }
 
   // DELETE method
-  Future<Map<String, dynamic>> delete(String endpoint) async {
+  Future<bool> delete(int id) async {
     try {
-      final response = await http.delete(Uri.parse(endpoint));
+      final response =
+          await http.delete(Uri.parse('$baseUrl/$id'), headers: headers);
 
       if (response.statusCode == 200) {
         return json.decode(response.body);

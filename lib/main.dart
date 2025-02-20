@@ -1,18 +1,21 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:newtest/Secreen/changeNotifier.dart';
-import 'package:newtest/Secreen/add_user.dart';
-import 'package:newtest/Secreen/my_home_page.dart';
-import 'package:newtest/Secreen/update_user_page.dart';
 
-import 'Secreen/ErrorPage.dart';
+import 'package:newtest/Presentation/Secreen/add_user.dart';
+import 'package:newtest/Presentation/Secreen/my_home_page.dart';
+import 'package:newtest/Presentation/Secreen/update_user_page.dart';
 
-import 'hive/Applocalization.dart';
-import 'hive/user_model.dart';
+import 'Presentation/Secreen/error_page.dart';
+import 'package:provider/provider.dart';
+
+import 'services/Applocalization.dart';
+import 'model/user_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'view_model/view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -74,26 +77,30 @@ class _AlertDialogAppState extends State<AlertDialogApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerDelegate: _router.routerDelegate,
-      routeInformationParser: _router.routeInformationParser,
-      routeInformationProvider:
-          _router.routeInformationProvider, // Optional but recommended
-      title: "Go_router",
-      theme: ThemeData.light(), // Add theme if needed
-      debugShowCheckedModeBanner: false,
-      builder: EasyLoading.init(),
-      locale: _locale, // Default locale
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
       ],
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      child: MaterialApp.router(
+        routerDelegate: _router.routerDelegate,
+        routeInformationParser: _router.routeInformationParser,
+        routeInformationProvider: _router.routeInformationProvider,
+        title: "GoRouter App",
+        theme: ThemeData.light(),
+        debugShowCheckedModeBanner: false,
+        builder: EasyLoading.init(),
+        locale: _locale,
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar'),
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+      ),
     );
   }
 }
