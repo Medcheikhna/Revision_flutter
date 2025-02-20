@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/view_model.dart';
@@ -13,7 +14,7 @@ class MyHomePage extends StatelessWidget {
     final userViewModel = context.watch<UserViewModel>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('User Management')),
+      appBar: AppBar(title: Text(S.of(context).user_management)),
       body: userViewModel.users.isEmpty && userViewModel.isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))
           : ListView.builder(
@@ -24,8 +25,8 @@ class MyHomePage extends StatelessWidget {
                 if (index < userViewModel.users.length) {
                   final user = userViewModel.users[index];
                   return ListTile(
-                    title: Text("Name: ${user.username}"),
-                    subtitle: Text("${user.email}"),
+                    title: Text('${S.of(context).name}: ${user.username}'),
+                    subtitle: Text("${S.of(context).email}: ${user.email}"),
                     onTap: () => UserDialog.show(context, user),
                   );
                 } else {

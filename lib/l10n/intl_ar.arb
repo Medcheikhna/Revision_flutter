@@ -1,0 +1,27 @@
+{
+    "user_management": "إدارة المستخدمين",
+    "name": "الاسم: {0}",
+    "email": "البريد الإلكتروني: {0}",
+    "manage_user": "إدارة {0}",
+    "update_or_delete": "هل تريد تحديث أو حذف هذا المستخدم؟",
+    "updating": "جاري التحديث...",
+    "deleting": "جاري الحذف...",
+    "adedding": "إضافة جاري...",
+    "operation_canceled": "تم إلغاء العملية",
+    "update": "تحديث",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "Error": "خطأ",
+    "add_user": "إضافة مستخدم",
+    "Something_wrong": "عذرًا! حدث خطأ ما",
+    "go_back": "العودة",
+    "user_update_success": "تم حذف المستخدم بنجاح!",
+    "failed_delete_user": "فشل في حذف المستخدم",
+    "error_delete_user": "خطأ في حذف المستخدم",
+    "user_added_successfully": "تم إضافة المستخدم بنجاح!",
+    "error_adding_user": "خطأ في إضافة المستخدم:",
+    "user_updated_successfully": "تم تحديث المستخدم بنجاح!",
+    "error_updating_user": "خطأ في تحديث المستخدم",
+    "failed_update_user": "فشل في تحديث المستخدم"
+  }
+  

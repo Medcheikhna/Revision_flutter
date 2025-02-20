@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newtest/generated/l10n.dart';
 
 class CustomFormWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -40,7 +41,7 @@ class CustomFormWidget extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: onSubmit,
-            child: const Text('Update'),
+            child: Text(S.of(context).update),
           ),
         ],
       ),

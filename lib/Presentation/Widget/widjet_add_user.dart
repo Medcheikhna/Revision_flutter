@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newtest/generated/l10n.dart';
 
 class CustomFormWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -88,7 +89,7 @@ class CustomFormWidget extends StatelessWidget {
           // Add User Button
           ElevatedButton(
             onPressed: onSubmit,
-            child: const Text('Add User'),
+            child: Text(S.of(context).add_user),
           ),
         ],
       ),

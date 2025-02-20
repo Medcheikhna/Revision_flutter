@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
+
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});
 
@@ -7,7 +9,9 @@ class ErrorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Error'),
+        title: Text(
+          S.of(context).Error,
+        ),
         backgroundColor: Colors.red,
       ),
       body: Center(
@@ -20,8 +24,8 @@ class ErrorPage extends StatelessWidget {
               size: 100,
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Oops! Something went wrong.',
+            Text(
+              S.of(context).Something_wrong,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -34,7 +38,9 @@ class ErrorPage extends StatelessWidget {
                 // Navigate back to the home page
                 Navigator.of(context).pop();
               },
-              child: const Text('Go Back'),
+              child: Text(
+                S.of(context).go_back,
+              ),
             ),
           ],
         ),

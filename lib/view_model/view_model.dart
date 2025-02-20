@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../model/user_model.dart';
 import '../../services/ApiFetcherGeneric.dart';
+import '../generated/l10n.dart';
 
 class UserViewModel extends ChangeNotifier {
   final Fetcher fetcher = Fetcher();
@@ -58,18 +59,18 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteUser(int id) async {
+  Future<void> deleteUser(BuildContext context, int id) async {
     try {
       bool success = await fetcher.delete(id);
       if (success) {
         users.removeWhere((user) => user.id == id);
         notifyListeners();
-        EasyLoading.showSuccess('User deleted successfully!');
+        EasyLoading.showSuccess(S.of(context).user_update_success);
       } else {
-        EasyLoading.showError('Failed to delete user.');
+        EasyLoading.showError(S.of(context).failed_delete_user);
       }
     } catch (e) {
-      EasyLoading.showError('Error deleting user: $e');
+      EasyLoading.showError('${S.of(context).error_delete_user} $e');
     }
   }
 
@@ -90,11 +91,11 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> addUser(BuildContext context, User user) async {
     try {
-      EasyLoading.show(status: 'Adding user...');
+      EasyLoading.show(status: S.of(context).adedding);
 
       final newUser = await fetcher.post(user);
       EasyLoading.dismiss();
-      EasyLoading.showSuccess('User added successfully!');
+      EasyLoading.showSuccess(S.of(context).user_added_successfully);
 
       final userBox = Hive.box<User>('users');
       userBox.add(newUser);
@@ -102,9 +103,9 @@ class UserViewModel extends ChangeNotifier {
       notifyListeners();
 
       context.go('/');
-        } catch (e) {
+    } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('Error adding user: $e');
+      EasyLoading.showError('${S.of(context).error_adding_user} $e');
     }
   }
 
@@ -112,7 +113,7 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> updateUser(BuildContext context, User updatedUser) async {
     try {
-      EasyLoading.show(status: 'Updating user...');
+      EasyLoading.show(status: S.of(context).updating);
 
       final response = await fetcher.put(updatedUser.id!, updatedUser);
       if (response != null) {
@@ -127,15 +128,15 @@ class UserViewModel extends ChangeNotifier {
         }
 
         EasyLoading.dismiss();
-        EasyLoading.showSuccess('User updated successfully!');
+        EasyLoading.showSuccess(S.of(context).user_update_success);
         context.go('/'); // Navigate back
       } else {
         EasyLoading.dismiss();
-        EasyLoading.showError('Failed to update user.');
+        EasyLoading.showError(S.of(context).failed_update_user);
       }
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('Error updating user: $e');
+      EasyLoading.showError('${S.of(context).error_updating_user} $e');
     }
   }
 }

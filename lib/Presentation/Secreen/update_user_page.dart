@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:newtest/model/user_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../generated/l10n.dart';
 import '../../view_model/view_model.dart';
 import '../Widget/widget_update.dart';
 
@@ -41,7 +42,7 @@ class _UpdatePageState extends State<UpdatePage> {
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Update User')),
+        appBar: AppBar(title: Text(S.of(context).update)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomFormWidget(

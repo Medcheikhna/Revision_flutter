@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:newtest/Presentation/Widget/widjet_add_user.dart';
+
 import 'package:newtest/model/user_model.dart';
 import 'package:newtest/services/ApiFetcherGeneric.dart';
 import 'package:provider/provider.dart';
 
+import '../../generated/l10n.dart';
 import '../../view_model/view_model.dart';
 
 class AddUserPage extends StatefulWidget {
@@ -34,7 +36,7 @@ class _AddUserPageState extends State<AddUserPage> {
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Add User')),
+        appBar: AppBar(title: Text(S.of(context).add_user)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomFormWidget(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../generated/l10n.dart';
 import '../../model/user_model.dart';
 import '../../view_model/view_model.dart';
 
@@ -10,27 +11,33 @@ class UserDialog {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Manage User'),
-        content: const Text('Update or Delete'),
+        title: Text(S.of(context).user_management),
+        content: Text(
+          S.of(context).update_or_delete,
+        ),
         actions: [
           TextButton(
             onPressed: () {
               context.go("/update-user", extra: user);
             },
-            child: const Text('Update'),
+            child: Text(
+              S.of(context).update,
+            ),
           ),
           TextButton(
             onPressed: () {
-              context.read<UserViewModel>().deleteUser(user.id as int);
+              context.read<UserViewModel>().deleteUser(context, user.id!);
               Navigator.of(context).pop();
             },
-            child: const Text('Delete'),
+            child: Text(
+              S.of(context).delete,
+            ),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Cancel'),
+            child: Text(S.of(context).cancel),
           ),
         ],
       ),

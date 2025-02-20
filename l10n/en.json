@@ -9,6 +9,7 @@
     "operation_canceled": "Operation canceled",
     "update": "Update",
     "delete": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "failed_delete_user": "Failed to delete user."
   }
   

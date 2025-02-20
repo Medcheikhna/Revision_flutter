@@ -1,4 +1,5 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:newtest/Presentation/Secreen/add_user.dart';
 import 'package:newtest/Presentation/Secreen/my_home_page.dart';
@@ -7,13 +8,13 @@ import 'package:newtest/Presentation/Secreen/update_user_page.dart';
 import 'Presentation/Secreen/error_page.dart';
 import 'package:provider/provider.dart';
 
-import 'services/Applocalization.dart';
+import 'generated/l10n.dart';
+
 import 'model/user_model.dart';
-// ignore: depend_on_referenced_packages
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'view_model/view_model.dart';
 
@@ -30,29 +31,16 @@ void main() async {
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  static _MyAppState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>();
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale = const Locale('en');
-
-  void setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-  //final _appRouter = AppRouter();
   final GoRouter _router = GoRouter(
     routes: [
       GoRoute(
           path: '/',
           builder: (context, state) {
-            // final conter = state.extra as Counter;
-            // print("object:===================$conter ");
             return MyHomePage();
           }),
       GoRoute(
@@ -89,17 +77,15 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData.light(),
         debugShowCheckedModeBanner: false,
         builder: EasyLoading.init(),
-        locale: _locale,
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ar'),
-        ],
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
+        locale: Locale('en'),
+        localizationsDelegates: <LocalizationsDelegate<Object>>[
+          S.delegate,
+          AppLocalizationDelegate(),
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+        supportedLocales: S.delegate.supportedLocales,
       ),
     );
   }
