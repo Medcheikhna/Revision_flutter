@@ -28,7 +28,6 @@ class UserViewModel extends ChangeNotifier {
     // Clear the cache before fetching new data
     await userBox.clear();
 
-    users.clear(); // Also clear the in-memory list
     notifyListeners();
 
     // Fetch fresh data from the backend
