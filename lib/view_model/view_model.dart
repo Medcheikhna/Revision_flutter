@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
-import '../../services/const/Url.dart';
+
 import '../../model/user_model.dart';
 import '../../services/ApiFetcherGeneric.dart';
 
