@@ -24,19 +24,19 @@ void main() async {
   // Open a box for the model
   await Hive.openBox<User>('users');
 
-  runApp(AlertDialogApp());
+  runApp(MyApp());
 }
 
-class AlertDialogApp extends StatefulWidget {
-  const AlertDialogApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
-  static _AlertDialogAppState? of(BuildContext context) =>
-      context.findAncestorStateOfType<_AlertDialogAppState>();
+  static _MyAppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<_MyAppState>();
   @override
-  State<AlertDialogApp> createState() => _AlertDialogAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _AlertDialogAppState extends State<AlertDialogApp> {
+class _MyAppState extends State<MyApp> {
   Locale _locale = const Locale('en');
 
   void setLocale(Locale locale) {

@@ -21,10 +21,10 @@ class AppLocalizations {
     return true;
   }
 
-  String translate(String key, { List<String?>? args}) {
+  String translate(String key, {List<String?>? args}) {
     return _localizedStrings[key] ?? key;
   }
-  
+
   static AppLocalizations? of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
@@ -47,14 +47,7 @@ class _AppLocalizationsDelegate
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 
-
-
-
   void changeLocale(BuildContext context, String languageCode) {
-    AlertDialogApp.of(context)!.setLocale(Locale(languageCode));
+    MyApp.of(context)!.setLocale(Locale(languageCode));
   }
-
-
 }
-
-

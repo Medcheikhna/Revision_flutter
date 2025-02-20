@@ -93,21 +93,16 @@ class UserViewModel extends ChangeNotifier {
       EasyLoading.show(status: 'Adding user...');
 
       final newUser = await fetcher.post(user);
-      if (newUser != null) {
-        EasyLoading.dismiss();
-        EasyLoading.showSuccess('User added successfully!');
+      EasyLoading.dismiss();
+      EasyLoading.showSuccess('User added successfully!');
 
-        final userBox = Hive.box<User>('users');
-        userBox.add(newUser);
-        users.add(newUser);
-        notifyListeners();
+      final userBox = Hive.box<User>('users');
+      userBox.add(newUser);
+      users.add(newUser);
+      notifyListeners();
 
-        context.go('/');
-      } else {
-        EasyLoading.dismiss();
-        EasyLoading.showError('Failed to add user.');
-      }
-    } catch (e) {
+      context.go('/');
+        } catch (e) {
       EasyLoading.dismiss();
       EasyLoading.showError('Error adding user: $e');
     }
