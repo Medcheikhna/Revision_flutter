@@ -134,6 +134,7 @@ class Fetcher {
     } catch (e) {
       print('object ,$e');
     }
+    return user;
   }
 
   // DELETE method
