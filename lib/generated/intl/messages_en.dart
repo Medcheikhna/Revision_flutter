@@ -30,7 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleting": MessageLookupByLibrary.simpleMessage("Deleting..."),
-        "email": MessageLookupByLibrary.simpleMessage("Email: {0}"),
+        "email": MessageLookupByLibrary.simpleMessage("Email:"),
         "error_adding_user":
             MessageLookupByLibrary.simpleMessage("Error adding user:"),
         "error_delete_user":
@@ -42,8 +42,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "failed_update_user":
             MessageLookupByLibrary.simpleMessage("Failed to update user"),
         "go_back": MessageLookupByLibrary.simpleMessage("Go Back"),
-        "manage_user": MessageLookupByLibrary.simpleMessage("Manage {0}"),
-        "name": MessageLookupByLibrary.simpleMessage("Name: {0}"),
+        "manage_user": MessageLookupByLibrary.simpleMessage("Manage "),
+        "name": MessageLookupByLibrary.simpleMessage("Name:"),
         "operation_canceled":
             MessageLookupByLibrary.simpleMessage("Operation canceled"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),

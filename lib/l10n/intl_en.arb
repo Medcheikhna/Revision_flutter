@@ -1,8 +1,8 @@
 {
     "user_management": "User Management",
-    "name": "Name: {0}",
-    "email": "Email: {0}",
-    "manage_user": "Manage {0}",
+    "name": "Name:",
+    "email": "Email:",
+    "manage_user": "Manage ",
     "update_or_delete": "Do you want to update or delete this user?",
     "updating": "Updating...",
     "deleting": "Deleting...",

@@ -60,30 +60,30 @@ class S {
     );
   }
 
-  /// `Name: {0}`
+  /// `Name:`
   String get name {
     return Intl.message(
-      'Name: {0}',
+      'Name:',
       name: 'name',
       desc: '',
       args: [],
     );
   }
 
-  /// `Email: {0}`
+  /// `Email:`
   String get email {
     return Intl.message(
-      'Email: {0}',
+      'Email:',
       name: 'email',
       desc: '',
       args: [],
     );
   }
 
-  /// `Manage {0}`
+  /// `Manage `
   String get manage_user {
     return Intl.message(
-      'Manage {0}',
+      'Manage ',
       name: 'manage_user',
       desc: '',
       args: [],

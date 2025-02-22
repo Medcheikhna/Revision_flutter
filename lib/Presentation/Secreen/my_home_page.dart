@@ -25,8 +25,8 @@ class MyHomePage extends StatelessWidget {
                 if (index < userViewModel.users.length) {
                   final user = userViewModel.users[index];
                   return ListTile(
-                    title: Text('${S.of(context).name}: ${user.username}'),
-                    subtitle: Text("${S.of(context).email}: ${user.email}"),
+                    title: Text('${S.of(context).name} ${user.username}'),
+                    subtitle: Text("${S.of(context).email} ${user.email}"),
                     onTap: () => UserDialog.show(context, user),
                   );
                 } else {

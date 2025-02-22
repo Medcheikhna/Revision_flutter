@@ -8,7 +8,8 @@ import 'package:newtest/services/exception.dart';
 
 class Fetcher {
   static const String baseUrl = 'https://jsonplaceholder.typicode.com/users';
-  late final Map<String, String> headers;
+  final Map<String, String> headers;
+  Fetcher({this.headers = const {}});
   // GET method
   Future<List<User>> get() async {
     try {
@@ -16,6 +17,7 @@ class Fetcher {
 
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body);
+        print(data);
         return data.map((json) => User.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load data');
