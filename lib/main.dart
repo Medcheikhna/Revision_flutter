@@ -65,10 +65,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserViewModel()),
-      ],
+    return ChangeNotifierProvider(
+      create: (_) => UserViewModel(),
       child: MaterialApp.router(
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
