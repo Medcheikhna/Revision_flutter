@@ -30,7 +30,6 @@ class Languages extends StatelessWidget {
                 child: Text('English'),
                 onTap: () {
                   context.go('/homepage');
-                  print("English: ");
                 },
               ),
               DropdownMenuItem(
