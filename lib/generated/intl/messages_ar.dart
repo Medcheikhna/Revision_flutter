@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_user": MessageLookupByLibrary.simpleMessage("إضافة مستخدم"),
         "adedding": MessageLookupByLibrary.simpleMessage("إضافة جاري..."),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        "choose_language": MessageLookupByLibrary.simpleMessage("اختر لغة"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleting": MessageLookupByLibrary.simpleMessage("جاري الحذف..."),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني: "),

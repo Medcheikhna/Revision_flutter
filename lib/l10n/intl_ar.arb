@@ -22,6 +22,7 @@
     "error_adding_user": "خطأ في إضافة المستخدم:",
     "user_updated_successfully": "تم تحديث المستخدم بنجاح!",
     "error_updating_user": "خطأ في تحديث المستخدم",
-    "failed_update_user": "فشل في تحديث المستخدم"
+    "failed_update_user": "فشل في تحديث المستخدم",
+    "choose_language": "اختر لغة"
   }
   

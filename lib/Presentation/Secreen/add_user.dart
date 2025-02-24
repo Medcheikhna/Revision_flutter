@@ -32,7 +32,7 @@ class _AddUserPageState extends State<AddUserPage> {
     final userViewModel = context.watch<UserViewModel>();
     return WillPopScope(
       onWillPop: () async {
-        context.go('/');
+        context.go('/homepage');
         return false;
       },
       child: Scaffold(
@@ -55,7 +55,7 @@ class _AddUserPageState extends State<AddUserPage> {
                 );
 
                 userViewModel.addUser(context, newUser).then((_) {
-                  context.go('/');
+                  context.go('/homepage');
                 });
               }
             },

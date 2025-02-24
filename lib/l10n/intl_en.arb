@@ -22,6 +22,7 @@
     "error_adding_user": "Error adding user:",
     "user_updated_successfully": "User updated successfully!",
     "error_updating_user": "Error updating user",
-    "failed_update_user": "Failed to update user"
+    "failed_update_user": "Failed to update user",
+    "choose_language":"Select a language"
   }
   
