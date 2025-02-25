@@ -38,7 +38,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
     return WillPopScope(
       onWillPop: () async {
-        context.go('/'); // Navigate back on back press
+        context.go('/homepage'); // Navigate back on back press
         return false;
       },
       child: Scaffold(

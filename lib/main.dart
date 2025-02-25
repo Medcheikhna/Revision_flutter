@@ -3,6 +3,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:newtest/Presentation/Secreen/login.dart';
+import 'package:newtest/view_model/authentication.dart';
 import 'package:provider/provider.dart';
 
 import 'Presentation/Secreen/add_user.dart';
@@ -12,7 +14,7 @@ import 'Presentation/Secreen/my_home_page.dart';
 import 'Presentation/Secreen/update_user_page.dart';
 import 'generated/l10n.dart';
 import 'model/user_model.dart';
-import 'services/languages_services.dart';
+import 'view_model/languages_services.dart';
 import 'view_model/view_model.dart';
 
 void main() async {
@@ -30,6 +32,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => LanguageService()),
+        ChangeNotifierProvider(
+          create: (_) => AuthViewModel(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -42,6 +47,10 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/',
         builder: (context, state) => Languages(),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => LoginScreen(),
       ),
       GoRoute(
         path: '/homepage',

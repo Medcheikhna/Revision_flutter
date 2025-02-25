@@ -5,11 +5,45 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:newtest/model/user_model.dart';
 import 'package:newtest/services/exception.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Fetcher {
   static const String baseUrl = 'https://jsonplaceholder.typicode.com/users';
   final Map<String, String> headers;
   Fetcher({this.headers = const {}});
+
+  // Login Method
+  Future<Map<String, dynamic>> login(String username, String password) async {
+    try {
+      final response = await http
+          .post(
+            Uri.parse('https://dummyjson.com/auth/login'),
+            headers: {'Content-Type': 'application/json'},
+            body: jsonEncode({
+              'username': username,
+              'password': password,
+              'expiresInMins': 30, // Optional, defaults to 60
+            }),
+          )
+          .timeout(Duration(seconds: 45));
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        String accessToken = responseData['token']; // Extract token
+
+        // Save token for future use
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('accessToken', accessToken);
+
+        return responseData; // Return full response
+      } else {
+        throw Exception('Invalid credentials');
+      }
+    } catch (e) {
+      throw Exception("Error: ${e.toString()}");
+    }
+  }
+
   // GET method
   Future<List<User>> get() async {
     try {

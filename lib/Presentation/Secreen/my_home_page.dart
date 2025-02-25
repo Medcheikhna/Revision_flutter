@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/second', extra: userViewModel.users);
+          context.go('/adduser', extra: userViewModel.users);
         },
         child: const Icon(Icons.add),
       ),
