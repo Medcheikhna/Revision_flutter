@@ -65,15 +65,6 @@ class AuthViewService extends ChangeNotifier {
     }
   }
 
-  // You can create a method to check if the user is logged in on app startup
-  Future<void> checkToken() async {
-    String? storedToken = await SharedPrefs.getToken();
-    if (storedToken != null) {
-      _token = storedToken;
-      notifyListeners();
-    }
-  }
-
   // You can also create a method to log out and remove the token from SharedPreferences
   Future<void> logout() async {
     await SharedPrefs.removeToken();
