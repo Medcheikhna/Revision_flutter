@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newtest/Presentation/Widget/customformfield.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../view_model/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,8 +17,15 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => Provider.of<AuthViewService>(context, listen: false)
+        .checkAppStatus(context)); // Call checkAppStatus on app start
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
+    final authViewModel = Provider.of<AuthViewService>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
@@ -29,13 +37,11 @@ class _LoginScreenState extends State<LoginScreen> {
               usernameController: _usernameController,
               passwordController: _passwordController,
               onSubmit: () async {
-                bool success = await authViewModel.authenticate(
-                  _usernameController.text,
-                  _passwordController.text,
+                final success = await authViewModel.authenticate(
+                  _usernameController.text.trim(),
+                  _passwordController.text.trim(),
                 );
-                print(_usernameController.text);
-                print(_passwordController.text);
-                print(success);
+
                 if (success) {
                   // Access the token after successful login
                   String? token = authViewModel.token;

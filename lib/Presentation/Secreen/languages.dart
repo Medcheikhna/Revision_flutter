@@ -19,14 +19,14 @@ class Languages extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 languageService.setLocale(Locale('en'));
-                GoRouter.of(context).go('/login');
+                GoRouter.of(context).go('/');
               },
               child: Text('English'),
             ),
             ElevatedButton(
               onPressed: () {
                 languageService.setLocale(Locale('ar'));
-                GoRouter.of(context).go('/login'); // Redirect after selection
+                GoRouter.of(context).go('/'); // Redirect after selection
               },
               child: Text('العربية'),
             ),

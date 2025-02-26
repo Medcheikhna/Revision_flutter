@@ -33,7 +33,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => LanguageService()),
         ChangeNotifierProvider(
-          create: (_) => AuthViewModel(),
+          create: (_) => AuthViewService(),
         ),
       ],
       child: MyApp(),
@@ -46,11 +46,11 @@ class MyApp extends StatelessWidget {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => Languages(),
+        builder: (context, state) => LoginScreen(),
       ),
       GoRoute(
-        path: '/login',
-        builder: (context, state) => LoginScreen(),
+        path: '/languages',
+        builder: (context, state) => Languages(),
       ),
       GoRoute(
         path: '/homepage',

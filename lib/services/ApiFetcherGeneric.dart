@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:newtest/model/auth.dart';
 import 'package:newtest/model/user_model.dart';
 import 'package:newtest/services/exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,7 @@ class Fetcher {
   Fetcher({this.headers = const {}});
 
   // Login Method
-  Future<Map<String, dynamic>> login(String username, String password) async {
+  Future<UserModel> login(String username, String password) async {
     try {
       final response = await http
           .post(
@@ -28,14 +29,14 @@ class Fetcher {
           .timeout(Duration(seconds: 45));
 
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        String accessToken = responseData['token']; // Extract token
-
+        final data = jsonDecode(response.body);
+        // Extract token
+        String accessToken = data['accessToken'];
         // Save token for future use
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', accessToken);
 
-        return responseData; // Return full response
+        return UserModel.fromJson(data);
       } else {
         throw Exception('Invalid credentials');
       }
