@@ -4,7 +4,6 @@ import 'package:newtest/services/services_sharedpreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/ApiFetcherGeneric.dart';
-// Import SharedPrefs
 
 class AuthViewService extends ChangeNotifier {
   final Fetcher _fetcher = Fetcher();
@@ -16,24 +15,23 @@ class AuthViewService extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   String? get token => _token;
 
-  /// 🔍 Check First Launch & Authentication
   Future<void> checkAppStatus(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    await SharedPrefs.removeToken();
+    _token = null;
+
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
-    String? storedToken = await SharedPrefs.getToken();
 
     if (isFirstLaunch) {
       await prefs.setBool('isFirstLaunch', false);
-      Future.microtask(
-          () => context.go('/languages')); // Navigate to Language Page
-    } else if (storedToken != null) {
-      _token = storedToken;
-      notifyListeners();
-      Future.microtask(() => context.go('/homepage')); // Navigate to Home Page
+      Future.microtask(() => context.go('/languages'));
+    } else {
+      Future.microtask(() => context.go('/'));
     }
   }
 
+ 
   Future<bool> authenticate(String username, String password) async {
     _isLoading = true;
     _errorMessage = null;
@@ -45,12 +43,12 @@ class AuthViewService extends ChangeNotifier {
       if (response.token.isNotEmpty) {
         _token = response.token;
 
-        // Store token securely
+        
         await SharedPrefs.saveToken(_token!);
 
         _isLoading = false;
         notifyListeners();
-        return true; // Login successful
+        return true;
       } else {
         _errorMessage = "Invalid credentials";
         _isLoading = false;
@@ -65,7 +63,7 @@ class AuthViewService extends ChangeNotifier {
     }
   }
 
-  // You can also create a method to log out and remove the token from SharedPreferences
+ 
   Future<void> logout() async {
     await SharedPrefs.removeToken();
     _token = null;

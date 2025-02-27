@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newtest/Presentation/Widget/customformfield.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../view_model/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,21 +11,36 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
     Future.microtask(() => Provider.of<AuthViewService>(context, listen: false)
-        .checkAppStatus(context)); // Call checkAppStatus on app start
+        .checkAppStatus(context));
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      Provider.of<AuthViewService>(context, listen: false).logout();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewService>(context);
-   
+
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
       body: Padding(
@@ -43,12 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
 
                 if (success) {
-                  // Access the token after successful login
-                  String? token = authViewModel.token;
-                  print("Access Token: $token"); // You can use the token here
-
-                  // Navigate on successful login
-                  context.go("/homepage");
+                  context.go("/homepage"); // Login success = homepage
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -62,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 20),
             authViewModel.isLoading
                 ? const CircularProgressIndicator()
-                : const SizedBox.shrink(), // Hide when not loading
+                : const SizedBox.shrink(),
           ],
         ),
       ),
