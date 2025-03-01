@@ -28,7 +28,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_user": MessageLookupByLibrary.simpleMessage("إضافة مستخدم"),
         "adedding": MessageLookupByLibrary.simpleMessage("إضافة جاري..."),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+        "change_theme": MessageLookupByLibrary.simpleMessage("تغيير الثيمات"),
+        "check_internet_connection": MessageLookupByLibrary.simpleMessage(
+            "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى"),
         "choose_language": MessageLookupByLibrary.simpleMessage("اختر لغة"),
+        "connection_failed":
+            MessageLookupByLibrary.simpleMessage("فشل الاتصال"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleting": MessageLookupByLibrary.simpleMessage("جاري الحذف..."),
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني: "),
@@ -43,10 +48,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "failed_update_user":
             MessageLookupByLibrary.simpleMessage("فشل في تحديث المستخدم"),
         "go_back": MessageLookupByLibrary.simpleMessage("العودة"),
+        "logout": MessageLookupByLibrary.simpleMessage("الخروج"),
         "manage_user": MessageLookupByLibrary.simpleMessage("إدارة "),
         "name": MessageLookupByLibrary.simpleMessage("الاسم: "),
         "operation_canceled":
             MessageLookupByLibrary.simpleMessage("تم إلغاء العملية"),
+        "settings": MessageLookupByLibrary.simpleMessage("لأعدادات"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "update_or_delete": MessageLookupByLibrary.simpleMessage(
             "هل تريد تحديث أو حذف هذا المستخدم؟"),

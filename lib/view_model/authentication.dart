@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/model/auth.dart';
+// Add this import
 import 'package:newtest/services/services_sharedpreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,16 +12,19 @@ class AuthViewService extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   String? _token;
+  UserModel? _currentUser; 
 
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String? get token => _token;
+  UserModel? get currentUser => _currentUser; 
 
   Future<void> checkAppStatus(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await SharedPrefs.removeToken();
     _token = null;
+    _currentUser = null; // ✅ Reset current user on app start (optional)
 
     bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
@@ -31,7 +36,6 @@ class AuthViewService extends ChangeNotifier {
     }
   }
 
- 
   Future<bool> authenticate(String username, String password) async {
     _isLoading = true;
     _errorMessage = null;
@@ -39,34 +43,29 @@ class AuthViewService extends ChangeNotifier {
 
     try {
       final response = await _fetcher.login(username, password);
-
-      if (response.token.isNotEmpty) {
+      if (response.token!.isNotEmpty) {
         _token = response.token;
-
-        
         await SharedPrefs.saveToken(_token!);
-
         _isLoading = false;
         notifyListeners();
         return true;
       } else {
-        _errorMessage = "Invalid credentials";
-        _isLoading = false;
-        notifyListeners();
-        return false;
+        _errorMessage = "Identifiants incorrects";
       }
     } catch (e) {
-      _errorMessage = "Error: ${e.toString()}";
+      print("Erreur lors de l'authentification: $e");
+      _errorMessage = "Impossible de se connecter. Vérifiez votre connexion.";
+    } finally {
       _isLoading = false;
       notifyListeners();
-      return false;
     }
+    return false;
   }
 
- 
   Future<void> logout() async {
     await SharedPrefs.removeToken();
     _token = null;
+    _currentUser = null; // ✅ Clear the user
     notifyListeners();
   }
 }

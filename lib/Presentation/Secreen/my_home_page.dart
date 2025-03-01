@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/Presentation/Widget/custumdrawer.dart';
 import 'package:newtest/generated/l10n.dart';
+import 'package:newtest/view_model/authentication.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/auth.dart';
 import '../../view_model/view_model.dart';
 import '../Widget/widget_home_page.dart';
 
@@ -12,9 +15,12 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.watch<UserViewModel>();
-
+    final authService = context.watch<AuthViewService>();
+    final currentUser = authService.currentUser ??
+        UserModel(username: "Guest", email: "guest@example.com");
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).user_management)),
+      drawer: CustomDrawer(userModel: currentUser),
       body: userViewModel.users.isEmpty && userViewModel.isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))
           : ListView.builder(

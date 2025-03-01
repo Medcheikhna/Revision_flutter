@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/model/auth.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../generated/l10n.dart';
 import '../../model/user_model.dart';
+
 import '../../view_model/view_model.dart';
 
 class UserDialog {
+  UserModel? userModel;
   static void show(BuildContext context, User user) {
     showDialog(
       context: context,

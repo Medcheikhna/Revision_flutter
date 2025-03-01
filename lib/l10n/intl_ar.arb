@@ -23,6 +23,11 @@
     "user_updated_successfully": "تم تحديث المستخدم بنجاح!",
     "error_updating_user": "خطأ في تحديث المستخدم",
     "failed_update_user": "فشل في تحديث المستخدم",
-    "choose_language": "اختر لغة"
+    "choose_language": "اختر لغة",
+    "settings":"لأعدادات",
+    "change_theme":"تغيير الثيمات",
+    "logout":"الخروج",
+    "connection_failed": "فشل الاتصال",
+    "check_internet_connection": "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى"
   }
   

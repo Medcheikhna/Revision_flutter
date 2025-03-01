@@ -57,27 +57,8 @@ class Fetcher {
       } else {
         throw Exception('Failed to load data');
       }
-    } on TimeoutException {
-      print("timout ");
-      throw Failure();
-    } on SocketException {
-      print("socket ");
-      throw Failure();
-    } on http.ClientException {
-      print("ClientException ");
-      throw Failure();
-    } on UnauthorisedException {
-      print("401-3");
-      throw Failure(code: 1);
-    } on BadRequestException {
-      print("bad 400");
-      throw Failure();
-    } on NotFoundException {
-      print("404");
-      throw Failure();
-    } on FetchDataException {
-      print("Erreur fetch data:");
-      throw Failure(message: "Erreur fetch data:");
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 

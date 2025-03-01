@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   _usernameController.text.trim(),
                   _passwordController.text.trim(),
                 );
-
+                print(success);
                 if (success) {
                   context.go("/homepage"); // Login success = homepage
                 } else {

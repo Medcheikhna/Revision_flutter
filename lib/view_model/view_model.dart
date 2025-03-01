@@ -15,7 +15,6 @@ class UserViewModel extends ChangeNotifier {
   List<User> users = [];
   bool isLoading = false;
   bool hasMoreData = true;
-  final int itemsPerPage = 8;
 
   UserViewModel() {
     fetchUsersFromHive();
@@ -41,7 +40,7 @@ class UserViewModel extends ChangeNotifier {
 
     try {
       final data = await fetcher.get();
-      // print(data);
+      print(data);
 
       if (data.isNotEmpty) {
         final userBox = Hive.box<User>('users');

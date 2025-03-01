@@ -28,8 +28,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "add_user": MessageLookupByLibrary.simpleMessage("Add User"),
         "adedding": MessageLookupByLibrary.simpleMessage("Adding..."),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "change_theme":
+            MessageLookupByLibrary.simpleMessage("Change the theme"),
+        "check_internet_connection":
+            MessageLookupByLibrary.simpleMessage("Check internet connection"),
         "choose_language":
             MessageLookupByLibrary.simpleMessage("Select a language"),
+        "connection_failed":
+            MessageLookupByLibrary.simpleMessage("Connection failed"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleting": MessageLookupByLibrary.simpleMessage("Deleting..."),
         "email": MessageLookupByLibrary.simpleMessage("Email:"),
@@ -44,10 +50,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "failed_update_user":
             MessageLookupByLibrary.simpleMessage("Failed to update user"),
         "go_back": MessageLookupByLibrary.simpleMessage("Go Back"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "manage_user": MessageLookupByLibrary.simpleMessage("Manage "),
         "name": MessageLookupByLibrary.simpleMessage("Name:"),
         "operation_canceled":
             MessageLookupByLibrary.simpleMessage("Operation canceled"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "update_or_delete": MessageLookupByLibrary.simpleMessage(
             "Do you want to update or delete this user?"),

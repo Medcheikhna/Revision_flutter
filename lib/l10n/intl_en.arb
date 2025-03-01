@@ -23,6 +23,12 @@
     "user_updated_successfully": "User updated successfully!",
     "error_updating_user": "Error updating user",
     "failed_update_user": "Failed to update user",
-    "choose_language":"Select a language"
+    "choose_language":"Select a language",
+    "settings":"Settings",
+    "change_theme":"Change the theme",
+    "logout":"Logout",
+    "connection_failed":"Connection failed",
+    "check_internet_connection":"Check internet connection"
+
   }
   

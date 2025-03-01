@@ -299,6 +299,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change the theme`
+  String get change_theme {
+    return Intl.message(
+      'Change the theme',
+      name: 'change_theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed`
+  String get connection_failed {
+    return Intl.message(
+      'Connection failed',
+      name: 'connection_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check internet connection`
+  String get check_internet_connection {
+    return Intl.message(
+      'Check internet connection',
+      name: 'check_internet_connection',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
