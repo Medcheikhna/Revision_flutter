@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../view_model/languages_services.dart';
 
 class Languages extends StatelessWidget {
+  const Languages({super.key});
   @override
   Widget build(BuildContext context) {
     final languageService = Provider.of<LanguageService>(context);
@@ -26,7 +27,7 @@ class Languages extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 languageService.setLocale(Locale('ar'));
-                GoRouter.of(context).go('/'); // Redirect after selection
+                GoRouter.of(context).go('/');
               },
               child: Text('العربية'),
             ),

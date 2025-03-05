@@ -26,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFormField(
-            controller: widget.usernameController, // Now used for username
+            controller: widget.usernameController, 
             decoration: const InputDecoration(labelText: "Username"),
             validator: (value) {
               if (value == null || value.isEmpty) {

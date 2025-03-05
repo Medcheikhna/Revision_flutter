@@ -13,7 +13,7 @@ class Fetcher {
   final Map<String, String> headers;
   Fetcher({this.headers = const {}});
 
-  // Login Method
+  
   Future<UserModel> login(String username, String password) async {
     try {
       final response = await http
@@ -23,16 +23,16 @@ class Fetcher {
             body: jsonEncode({
               'username': username,
               'password': password,
-              'expiresInMins': 30, // Optional, defaults to 60
+              'expiresInMins': 30, 
             }),
           )
           .timeout(Duration(seconds: 45));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        // Extract token
+      
         String accessToken = data['accessToken'];
-        // Save token for future use
+    
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', accessToken);
 

@@ -22,7 +22,7 @@ class UserDialog {
         actions: [
           TextButton(
             onPressed: () {
-              context.go("/update-user", extra: user);
+              context.go("/updateuser_page", extra: user);
             },
             child: Text(
               S.of(context).update,
@@ -31,7 +31,7 @@ class UserDialog {
           TextButton(
             onPressed: () {
               context.read<UserViewModel>().deleteUser(context, user.id!);
-              Navigator.of(context).pop();
+              context.go('/');
             },
             child: Text(
               S.of(context).delete,
@@ -39,7 +39,7 @@ class UserDialog {
           ),
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              context.go('/');
             },
             child: Text(S.of(context).cancel),
           ),

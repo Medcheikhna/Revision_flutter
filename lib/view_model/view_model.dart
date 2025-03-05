@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../model/user_model.dart';
-import '../../services/ApiFetcherGeneric.dart';
+import '../services/fetcher.dart';
 import '../generated/l10n.dart';
 
 class UserViewModel extends ChangeNotifier {
@@ -24,12 +24,10 @@ class UserViewModel extends ChangeNotifier {
   Future<void> fetchUsersFromHive() async {
     final userBox = Hive.box<User>('users');
 
-    // Clear the cache before fetching new data
     await userBox.clear();
 
     notifyListeners();
 
-    // Fetch fresh data from the backend
     await fetchUsers();
   }
 
@@ -127,7 +125,7 @@ class UserViewModel extends ChangeNotifier {
 
         EasyLoading.dismiss();
         EasyLoading.showSuccess(S.of(context).user_update_success);
-        context.go('/'); // Navigate back
+        context.go('/');
       } else {
         EasyLoading.dismiss();
         EasyLoading.showError(S.of(context).failed_update_user);

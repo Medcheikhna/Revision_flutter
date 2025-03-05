@@ -29,6 +29,6 @@ class LanguageService extends ChangeNotifier {
     await prefs.setString(languageKey, newLocale.languageCode);
 
     _locale = newLocale;
-    notifyListeners(); // Notify UI about the change
+    notifyListeners(); 
   }
 }

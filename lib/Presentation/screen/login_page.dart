@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/Presentation/Widget/customformfield.dart';
+import 'package:newtest/presentation/widget/custom_formfield.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/authentication.dart';
 
@@ -14,28 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-
-    Future.microtask(() => Provider.of<AuthViewService>(context, listen: false)
-        .checkAppStatus(context));
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      Provider.of<AuthViewService>(context, listen: false).logout();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                 );
                 print(success);
                 if (success) {
-                  context.go("/homepage"); // Login success = homepage
+                  context.go("/home_page");
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

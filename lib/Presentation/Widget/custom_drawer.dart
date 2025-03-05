@@ -54,7 +54,7 @@ class CustomDrawer extends StatelessWidget {
             title: Text(S.of(context).logout),
             onTap: () async {
               await authService.logout();
-              context.go('/'); // Redirect to login
+              context.go('/'); 
             },
           ),
         ],

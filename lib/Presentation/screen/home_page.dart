@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/Presentation/Widget/custumdrawer.dart';
+import 'package:newtest/presentation/widget/custom_drawer.dart';
 import 'package:newtest/generated/l10n.dart';
 import 'package:newtest/view_model/authentication.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/auth.dart';
 import '../../view_model/view_model.dart';
-import '../Widget/widget_home_page.dart';
+import '../widget/widget_home_page.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/adduser', extra: userViewModel.users);
+          context.go('/adduser_page', extra: userViewModel.users);
         },
         child: const Icon(Icons.add),
       ),

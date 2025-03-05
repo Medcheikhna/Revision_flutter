@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../generated/l10n.dart';
 
@@ -36,7 +37,7 @@ class ErrorPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate back to the home page
-                Navigator.of(context).pop();
+                context.go('/');
               },
               child: Text(
                 S.of(context).go_back,

@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:newtest/model/auth.dart';
+import 'package:newtest/services/fetcher.dart';
 // Add this import
 import 'package:newtest/services/services_sharedpreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../services/ApiFetcherGeneric.dart';
 
 class AuthViewService extends ChangeNotifier {
   final Fetcher _fetcher = Fetcher();
   bool _isLoading = false;
   String? _errorMessage;
   String? _token;
-  UserModel? _currentUser; 
+  UserModel? _currentUser;
 
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String? get token => _token;
-  UserModel? get currentUser => _currentUser; 
-
-  Future<void> checkAppStatus(BuildContext context) async {
+  UserModel? get currentUser => _currentUser;
+  bool? isFirstLaunch;
+  Future<void> checkAppStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await SharedPrefs.removeToken();
     _token = null;
-    _currentUser = null; // ✅ Reset current user on app start (optional)
+    _currentUser = null;
 
-    bool isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
+    isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
-    if (isFirstLaunch) {
+    if (isFirstLaunch == true) {
       await prefs.setBool('isFirstLaunch', false);
-      Future.microtask(() => context.go('/languages'));
-    } else {
-      Future.microtask(() => context.go('/'));
     }
+
+    notifyListeners();
   }
 
   Future<bool> authenticate(String username, String password) async {
@@ -65,7 +63,7 @@ class AuthViewService extends ChangeNotifier {
   Future<void> logout() async {
     await SharedPrefs.removeToken();
     _token = null;
-    _currentUser = null; // ✅ Clear the user
+    _currentUser = null;
     notifyListeners();
   }
 }

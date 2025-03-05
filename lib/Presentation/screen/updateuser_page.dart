@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../generated/l10n.dart';
 import '../../view_model/view_model.dart';
-import '../Widget/widget_update.dart';
+import '../widget/widget_update_page.dart';
 
 class UpdatePage extends StatefulWidget {
   final User user;
@@ -38,7 +38,7 @@ class _UpdatePageState extends State<UpdatePage> {
 
     return WillPopScope(
       onWillPop: () async {
-        context.go('/homepage'); // Navigate back on back press
+        context.go('/home_page'); // Navigate back on back press
         return false;
       },
       child: Scaffold(

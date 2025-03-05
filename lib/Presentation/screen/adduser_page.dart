@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import 'package:newtest/Presentation/Widget/widjet_add_user.dart';
+import 'package:newtest/presentation/widget/widget_adduser_page.dart';
 
 import 'package:newtest/model/user_model.dart';
-import 'package:newtest/services/ApiFetcherGeneric.dart';
+import 'package:newtest/services/fetcher.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../generated/l10n.dart';
@@ -32,7 +33,7 @@ class _AddUserPageState extends State<AddUserPage> {
     final userViewModel = context.watch<UserViewModel>();
     return WillPopScope(
       onWillPop: () async {
-        context.go('/homepage');
+        context.go('/home_page');
         return false;
       },
       child: Scaffold(
@@ -55,7 +56,7 @@ class _AddUserPageState extends State<AddUserPage> {
                 );
 
                 userViewModel.addUser(context, newUser).then((_) {
-                  context.go('/homepage');
+                  context.go('/home_page');
                 });
               }
             },
