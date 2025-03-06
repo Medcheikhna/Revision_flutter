@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newtest/presentation/widget/custom_drawer.dart';
-import 'package:newtest/generated/l10n.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:newtest/view_model/authentication.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/auth.dart';
-import '../../view_model/view_model.dart';
+import '../../view_model/userviewmodel.dart';
 import '../widget/widget_home_page.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -19,7 +20,7 @@ class MyHomePage extends StatelessWidget {
     final currentUser = authService.currentUser ??
         UserModel(username: "Guest", email: "guest@example.com");
     return Scaffold(
-      appBar: AppBar(title: Text(S.of(context).user_management)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.userManagement)),
       drawer: CustomDrawer(userModel: currentUser),
       body: userViewModel.users.isEmpty && userViewModel.isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))
@@ -31,8 +32,10 @@ class MyHomePage extends StatelessWidget {
                 if (index < userViewModel.users.length) {
                   final user = userViewModel.users[index];
                   return ListTile(
-                    title: Text('${S.of(context).name} ${user.username}'),
-                    subtitle: Text("${S.of(context).email} ${user.email}"),
+                    title: Text(AppLocalizations.of(context)!.name +
+                        '${user.username}'),
+                    subtitle: Text(
+                        "${AppLocalizations.of(context)!.email} ${user.email}"),
                     onTap: () => UserDialog.show(context, user),
                   );
                 } else {
@@ -47,7 +50,7 @@ class MyHomePage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/adduser_page', extra: userViewModel.users);
+          context.go('/adduser', extra: userViewModel.users);
         },
         child: const Icon(Icons.add),
       ),

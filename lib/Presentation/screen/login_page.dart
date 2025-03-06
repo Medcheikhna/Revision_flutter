@@ -16,9 +16,15 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final authViewModel = Provider.of<AuthViewService>(context, listen: false);
+    authViewModel.checkAppStatus(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewService>(context);
-
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
       body: Padding(
@@ -33,9 +39,10 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
                   _usernameController.text.trim(),
                   _passwordController.text.trim(),
                 );
+                print("==============success============");
                 print(success);
                 if (success) {
-                  context.go("/home_page");
+                  context.go("/home");
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -56,3 +63,10 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     );
   }
 }
+
+
+/// provider for count 
+/// 
+/// 
+/// 
+/// 

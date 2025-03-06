@@ -6,15 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:newtest/model/auth.dart';
 import 'package:newtest/model/user_model.dart';
 import 'package:newtest/services/exception.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Fetcher {
   static const String baseUrl = 'https://jsonplaceholder.typicode.com/users';
   final Map<String, String> headers;
   Fetcher({this.headers = const {}});
 
-  
   Future<UserModel> login(String username, String password) async {
+    print(username + " : " + password);
     try {
       final response = await http
           .post(
@@ -23,18 +22,13 @@ class Fetcher {
             body: jsonEncode({
               'username': username,
               'password': password,
-              'expiresInMins': 30, 
+              'expiresInMins': 30,
             }),
           )
           .timeout(Duration(seconds: 45));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-      
-        String accessToken = data['accessToken'];
-    
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken', accessToken);
 
         return UserModel.fromJson(data);
       } else {

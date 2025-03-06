@@ -9,8 +9,9 @@ import 'package:newtest/services/fetcher.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../generated/l10n.dart';
-import '../../view_model/view_model.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../view_model/Userviewmodel.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({super.key});
@@ -33,11 +34,11 @@ class _AddUserPageState extends State<AddUserPage> {
     final userViewModel = context.watch<UserViewModel>();
     return WillPopScope(
       onWillPop: () async {
-        context.go('/home_page');
+        context.go('/home');
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(S.of(context).add_user)),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.addUser)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomFormWidget(
@@ -56,7 +57,7 @@ class _AddUserPageState extends State<AddUserPage> {
                 );
 
                 userViewModel.addUser(context, newUser).then((_) {
-                  context.go('/home_page');
+                  context.go('/home');
                 });
               }
             },

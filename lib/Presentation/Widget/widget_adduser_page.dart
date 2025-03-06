@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newtest/generated/l10n.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomFormWidget extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -89,7 +89,7 @@ class CustomFormWidget extends StatelessWidget {
           // Add User Button
           ElevatedButton(
             onPressed: onSubmit,
-            child: Text(S.of(context).add_user),
+            child: Text(AppLocalizations.of(context)!.addUser),
           ),
         ],
       ),

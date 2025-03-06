@@ -1,7 +1,9 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../generated/l10n.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});
@@ -11,7 +13,7 @@ class ErrorPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          S.of(context).Error,
+          AppLocalizations.of(context)!.error,
         ),
         backgroundColor: Colors.red,
       ),
@@ -26,7 +28,7 @@ class ErrorPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              S.of(context).Something_wrong,
+              AppLocalizations.of(context)!.something_wrong,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -40,7 +42,7 @@ class ErrorPage extends StatelessWidget {
                 context.go('/');
               },
               child: Text(
-                S.of(context).go_back,
+                AppLocalizations.of(context)!.goBack,
               ),
             ),
           ],

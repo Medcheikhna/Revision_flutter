@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:newtest/model/user_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../generated/l10n.dart';
-import '../../view_model/view_model.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../view_model/userviewmodel.dart';
 import '../widget/widget_update_page.dart';
 
 class UpdatePage extends StatefulWidget {
@@ -38,11 +39,11 @@ class _UpdatePageState extends State<UpdatePage> {
 
     return WillPopScope(
       onWillPop: () async {
-        context.go('/home_page'); // Navigate back on back press
+        context.go('/home'); // Navigate back on back press
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(S.of(context).update)),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.update)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomFormWidget(

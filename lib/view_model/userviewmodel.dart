@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../model/user_model.dart';
 import '../services/fetcher.dart';
-import '../generated/l10n.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserViewModel extends ChangeNotifier {
   final Fetcher fetcher = Fetcher();
@@ -61,12 +61,14 @@ class UserViewModel extends ChangeNotifier {
       if (success) {
         users.removeWhere((user) => user.id == id);
         notifyListeners();
-        EasyLoading.showSuccess(S.of(context).user_update_success);
+        EasyLoading.showSuccess(
+            AppLocalizations.of(context)!.userUpdateSuccess);
       } else {
-        EasyLoading.showError(S.of(context).failed_delete_user);
+        EasyLoading.showError(AppLocalizations.of(context)!.failedDeleteUser);
       }
     } catch (e) {
-      EasyLoading.showError('${S.of(context).error_delete_user} $e');
+      EasyLoading.showError(
+          '${AppLocalizations.of(context)!.errorDeleteUser} $e');
     }
   }
 
@@ -87,21 +89,23 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> addUser(BuildContext context, User user) async {
     try {
-      EasyLoading.show(status: S.of(context).adedding);
+      EasyLoading.show(status: AppLocalizations.of(context)!.adding);
 
       final newUser = await fetcher.post(user);
       EasyLoading.dismiss();
-      EasyLoading.showSuccess(S.of(context).user_added_successfully);
+      EasyLoading.showSuccess(
+          AppLocalizations.of(context)!.userAddedSuccessfully);
 
       final userBox = Hive.box<User>('users');
       userBox.add(newUser);
       users.add(newUser);
       notifyListeners();
 
-      context.go('/');
+      context.go('/home');
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('${S.of(context).error_adding_user} $e');
+      EasyLoading.showError(
+          '${AppLocalizations.of(context)!.errorAddingUser} $e');
     }
   }
 
@@ -109,7 +113,7 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> updateUser(BuildContext context, User updatedUser) async {
     try {
-      EasyLoading.show(status: S.of(context).updating);
+      EasyLoading.show(status: AppLocalizations.of(context)!.updating);
 
       final response = await fetcher.put(updatedUser.id!, updatedUser);
       if (response != null) {
@@ -124,15 +128,17 @@ class UserViewModel extends ChangeNotifier {
         }
 
         EasyLoading.dismiss();
-        EasyLoading.showSuccess(S.of(context).user_update_success);
-        context.go('/');
+        EasyLoading.showSuccess(
+            AppLocalizations.of(context)!.userUpdateSuccess);
+        context.go('/home');
       } else {
         EasyLoading.dismiss();
-        EasyLoading.showError(S.of(context).failed_update_user);
+        EasyLoading.showError(AppLocalizations.of(context)!.failedUpdateUser);
       }
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('${S.of(context).error_updating_user} $e');
+      EasyLoading.showError(
+          '${AppLocalizations.of(context)!.errorUpdatingUser} $e');
     }
   }
 }

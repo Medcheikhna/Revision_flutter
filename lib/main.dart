@@ -3,82 +3,69 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:newtest/l10n/l10n.dart';
 import 'package:newtest/presentation/screen/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:newtest/model/user_model.dart';
-import 'package:newtest/generated/l10n.dart';
 
 import 'presentation/screen/adduser_page.dart';
 import 'presentation/screen/error_page.dart';
 import 'presentation/screen/languages_page.dart';
 import 'presentation/screen/home_page.dart';
 import 'presentation/screen/updateuser_page.dart';
-
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
 import 'view_model/authentication.dart';
-import 'view_model/languages_services.dart';
-import 'view_model/view_model.dart';
+import 'view_model/languagesservices.dart';
+import 'view_model/userviewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>('users');
+
+  final languageService = LanguageService();
+  await languageService.loadLocale();
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => languageService),
         ChangeNotifierProvider(
-          create: (context) => LanguageService(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) {
-            final authService = AuthViewService();
-            authService.checkAppStatus();
-            return authService;
-          },
+          create: (context) => AuthViewService(),
         ),
       ],
       child: MyApp(),
-    ),  
+    ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewService>(context);
-
     final GoRouter router = GoRouter(
-      refreshListenable: authViewModel,
-      initialLocation: '/',
-      redirect: (context, state) {
-        if (authViewModel.isFirstLaunch == null) {
-          return null;
-        } else if (authViewModel.isFirstLaunch == true) {
-          return '/languages_page';
-        } else {
-          return null;
-        }
-      },
       routes: [
         GoRoute(
           path: '/',
           builder: (context, state) => const LoginScreen(),
         ),
         GoRoute(
-          path: '/languages_page',
+          path: '/languages',
           builder: (context, state) => const Languages(),
         ),
         GoRoute(
-          path: '/home_page',
+          path: '/home',
           builder: (context, state) => const MyHomePage(),
         ),
         GoRoute(
-          path: '/adduser_page',
+          path: '/adduser',
           builder: (context, state) => const AddUserPage(),
         ),
         GoRoute(
-          path: '/updateuser_page',
+          path: '/updateuser',
           builder: (context, state) {
             final user = state.extra as User;
             return UpdatePage(user: user);
@@ -103,12 +90,12 @@ class MyApp extends StatelessWidget {
           builder: EasyLoading.init(),
           locale: languageService.locale,
           localizationsDelegates: [
-            S.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+            AppLocalizations.delegate,
           ],
-          supportedLocales: S.delegate.supportedLocales,
+          supportedLocales: L10n.all,
         );
       },
     );

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/generated/l10n.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:newtest/model/auth.dart';
 import 'package:newtest/view_model/authentication.dart';
-import 'package:newtest/view_model/languages_services.dart';
+import 'package:newtest/view_model/languagesservices.dart';
 
 import 'package:provider/provider.dart';
 
@@ -25,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
           _buildUserHeader(userModel),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: Text(S.of(context).settings),
+            title: Text(AppLocalizations.of(context)!.settings),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Settings page coming soon!")),
@@ -34,7 +35,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.brightness_6),
-            title: Text(S.of(context).change_theme),
+            title: Text(AppLocalizations.of(context)!.changeTheme),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Theme change coming soon!")),
@@ -43,7 +44,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.language),
-            title: Text(S.of(context).choose_language),
+            title: Text(AppLocalizations.of(context)!.chooseLanguage),
             onTap: () {
               _showLanguageDialog(context, languageService);
             },
@@ -51,10 +52,10 @@ class CustomDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.logout),
-            title: Text(S.of(context).logout),
+            title: Text(AppLocalizations.of(context)!.logout),
             onTap: () async {
               await authService.logout();
-              context.go('/'); 
+              context.go('/');
             },
           ),
         ],
@@ -80,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(S.of(context).choose_language),
+        title: Text(AppLocalizations.of(context)!.chooseLanguage),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

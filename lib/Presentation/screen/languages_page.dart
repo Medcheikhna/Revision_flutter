@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/generated/l10n.dart';
+import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:provider/provider.dart';
 
-import '../../view_model/languages_services.dart';
+import '../../view_model/languagesservices.dart';
 
 class Languages extends StatelessWidget {
   const Languages({super.key});
@@ -12,22 +13,22 @@ class Languages extends StatelessWidget {
     final languageService = Provider.of<LanguageService>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(S.of(context).choose_language)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.chooseLanguage)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                languageService.setLocale(Locale('en'));
-                GoRouter.of(context).go('/');
+              onPressed: () async {
+                await languageService.setLocale(Locale('en'));
+                context.go('/');
               },
               child: Text('English'),
             ),
             ElevatedButton(
               onPressed: () {
                 languageService.setLocale(Locale('ar'));
-                GoRouter.of(context).go('/');
+                context.go('/');
               },
               child: Text('العربية'),
             ),
