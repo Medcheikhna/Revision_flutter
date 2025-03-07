@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newtest/helper/localizationhelper.dart';
-import 'package:newtest/model/auth.dart';
 
 import 'package:provider/provider.dart';
 
@@ -10,8 +9,8 @@ import '../../model/user_model.dart';
 import '../../view_model/Userviewmodel.dart';
 
 class UserDialog {
-  UserModel? userModel;
   static void show(BuildContext context, User user) {
+    final userViewModel = context.read<UserViewModel>();
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -22,7 +21,8 @@ class UserDialog {
         actions: [
           TextButton(
             onPressed: () {
-              context.go("/updateuser_page", extra: user);
+              userViewModel.setSelectedUser(user);
+              context.go("/updateuser");
             },
             child: Text(
               LocalizationsHelper.msgs.update,
@@ -30,9 +30,9 @@ class UserDialog {
           ),
           TextButton(
             onPressed: () {
-              context.read<UserViewModel>().deleteUser(context, user.id!);
+              userViewModel.deleteUser(context, user.id!);
               print("================");
-              context.go('/home_page');
+              context.go('/home');
               print("================");
             },
             child: Text(
@@ -41,7 +41,7 @@ class UserDialog {
           ),
           TextButton(
             onPressed: () {
-              context.go('/');
+              context.go('/home');
             },
             child: Text(LocalizationsHelper.msgs.cancel),
           ),

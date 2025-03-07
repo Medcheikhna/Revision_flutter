@@ -6,7 +6,6 @@ import 'package:newtest/helper/localizationhelper.dart';
 import 'package:newtest/presentation/widget/widget_adduser_page.dart';
 
 import 'package:newtest/model/user_model.dart';
-import 'package:newtest/services/fetcher.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,9 +19,7 @@ class AddUserPage extends StatefulWidget {
 }
 
 class _AddUserPageState extends State<AddUserPage> {
-  final Fetcher fetcher = Fetcher();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -30,7 +27,9 @@ class _AddUserPageState extends State<AddUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userViewModel = context.watch<UserViewModel>();
+    final userViewModel =
+        context.watch<UserViewModel>(); 
+
     return WillPopScope(
       onWillPop: () async {
         context.go('/home');
@@ -55,6 +54,7 @@ class _AddUserPageState extends State<AddUserPage> {
                   phone: _phoneController.text,
                 );
 
+                // Use UserViewModel to add user
                 userViewModel.addUser(context, newUser).then((_) {
                   context.go('/home');
                 });

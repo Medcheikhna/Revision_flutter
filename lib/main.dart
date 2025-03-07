@@ -13,7 +13,7 @@ import 'presentation/screen/error_page.dart';
 import 'presentation/screen/languages_page.dart';
 import 'presentation/screen/home_page.dart';
 import 'presentation/screen/updateuser_page.dart';
-import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'view_model/authentication.dart';
 import 'view_model/languagesservices.dart';
 import 'view_model/userviewmodel.dart';
@@ -67,10 +67,7 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/updateuser',
-          builder: (context, state) {
-            final user = state.extra as User;
-            return UpdatePage(user: user);
-          },
+          builder: (context, state) => const UpdatePage(),
         ),
       ],
       errorBuilder: (context, state) {

@@ -28,7 +28,7 @@ class AuthViewService extends ChangeNotifier {
       await prefs.setBool('isFirstLaunch', false);
 
       Future.microtask(() {
-        context.go('/languages_page');
+        context.go('/languages');
       });
       notifyListeners();
     } else if (isFirstLaunch == false) {

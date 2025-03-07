@@ -14,21 +14,11 @@ class UserViewModel extends ChangeNotifier {
 
   List<User> users = [];
   bool isLoading = false;
-  bool hasMoreData = true;
 
+  User? _selectedUser;
+  User? get selectedUser => _selectedUser;
   UserViewModel() {
-    fetchUsersFromHive();
-    scrollController.addListener(_onScroll);
-  }
-
-  Future<void> fetchUsersFromHive() async {
-    final userBox = Hive.box<User>('users');
-
-    await userBox.clear();
-
-    notifyListeners();
-
-    await fetchUsers();
+    fetchUsers();
   }
 
   Future<void> fetchUsers() async {
@@ -40,10 +30,12 @@ class UserViewModel extends ChangeNotifier {
       final data = await fetcher.get();
       print(data);
 
+      final userBox = Hive.box<User>('users');
+      await userBox.clear(); 
+
       if (data.isNotEmpty) {
-        final userBox = Hive.box<User>('users');
-        await userBox.clear();
         users.addAll(data);
+        await userBox.addAll(data); 
         notifyListeners();
       } else {
         notifyListeners();
@@ -70,19 +62,6 @@ class UserViewModel extends ChangeNotifier {
     }
   }
 
-  void _onScroll() {
-    if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent &&
-        hasMoreData) {
-      fetchUsers();
-    }
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
   //==============adduserr=====================
 
   Future<void> addUser(BuildContext context, User user) async {
@@ -106,6 +85,11 @@ class UserViewModel extends ChangeNotifier {
   }
 
   //=============================update user ==============================
+
+  void setSelectedUser(User user) {
+    _selectedUser = user;
+    notifyListeners();
+  }
 
   Future<void> updateUser(BuildContext context, User updatedUser) async {
     try {

@@ -19,6 +19,7 @@ class MyHomePage extends StatelessWidget {
     final authService = context.watch<AuthViewService>();
     final currentUser = authService.currentUser ??
         UserModel(username: "Guest", email: "guest@example.com");
+
     return Scaffold(
       appBar: AppBar(title: Text(LocalizationsHelper.msgs.userManagement)),
       drawer: CustomDrawer(userModel: currentUser),
@@ -50,7 +51,8 @@ class MyHomePage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.go('/adduser', extra: userViewModel.users);
+          // Navigate to the AddUserPage
+          context.go('/adduser');
         },
         child: const Icon(Icons.add),
       ),

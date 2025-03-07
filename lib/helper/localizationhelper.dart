@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'navigation_helper.dart';
-import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocalizationsHelper {
   static AppLocalizations get msgs {

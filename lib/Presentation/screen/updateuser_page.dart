@@ -9,9 +9,9 @@ import '../../view_model/userviewmodel.dart';
 import '../widget/widget_update_page.dart';
 
 class UpdatePage extends StatefulWidget {
-  final User user;
-
-  const UpdatePage({super.key, required this.user});
+  const UpdatePage({
+    super.key,
+  });
 
   @override
   State<UpdatePage> createState() => _UpdatePageState();
@@ -27,18 +27,19 @@ class _UpdatePageState extends State<UpdatePage> {
   @override
   void initState() {
     super.initState();
-    phoneController = TextEditingController(text: widget.user.phone);
-    emailController = TextEditingController(text: widget.user.email);
-    nameController = TextEditingController(text: widget.user.name);
+    final user = context.read<UserViewModel>().selectedUser!;
+    phoneController = TextEditingController(text: user.phone);
+    emailController = TextEditingController(text: user.email);
+    nameController = TextEditingController(text: user.name);
   }
 
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.watch<UserViewModel>();
-
+    final user = userViewModel.selectedUser!;
     return WillPopScope(
       onWillPop: () async {
-        context.go('/home'); // Navigate back on back press
+        context.go('/home');
         return false;
       },
       child: Scaffold(
@@ -53,7 +54,7 @@ class _UpdatePageState extends State<UpdatePage> {
             onSubmit: () {
               if (_formKey.currentState!.validate()) {
                 final updatedUser = User(
-                  id: widget.user.id,
+                  id: user.id,
                   name: nameController.text,
                   email: emailController.text,
                   phone: phoneController.text,

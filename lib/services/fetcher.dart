@@ -13,7 +13,7 @@ class Fetcher {
   Fetcher({this.headers = const {}});
 
   Future<UserModel> login(String username, String password) async {
-    print(username + " : " + password);
+    print("$username : $password");
     try {
       final response = await http
           .post(
