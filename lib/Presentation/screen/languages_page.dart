@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:newtest/helper/localizationhelper.dart';
 
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class Languages extends StatelessWidget {
     final languageService = Provider.of<LanguageService>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.chooseLanguage)),
+      appBar: AppBar(title: Text(LocalizationsHelper.msgs.chooseLanguage)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

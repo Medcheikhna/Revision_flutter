@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:newtest/helper/localizationhelper.dart';
 
 import 'package:newtest/model/auth.dart';
 import 'package:newtest/view_model/authentication.dart';
@@ -26,7 +26,7 @@ class CustomDrawer extends StatelessWidget {
           _buildUserHeader(userModel),
           ListTile(
             leading: const Icon(Icons.settings),
-            title: Text(AppLocalizations.of(context)!.settings),
+            title: Text(LocalizationsHelper.msgs.settings),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Settings page coming soon!")),
@@ -35,7 +35,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.brightness_6),
-            title: Text(AppLocalizations.of(context)!.changeTheme),
+            title: Text(LocalizationsHelper.msgs.changeTheme),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Theme change coming soon!")),
@@ -44,7 +44,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.language),
-            title: Text(AppLocalizations.of(context)!.chooseLanguage),
+            title: Text(LocalizationsHelper.msgs.chooseLanguage),
             onTap: () {
               _showLanguageDialog(context, languageService);
             },
@@ -52,7 +52,7 @@ class CustomDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.logout),
-            title: Text(AppLocalizations.of(context)!.logout),
+            title: Text(LocalizationsHelper.msgs.logout),
             onTap: () async {
               await authService.logout();
               context.go('/');
@@ -81,7 +81,7 @@ class CustomDrawer extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.chooseLanguage),
+        title: Text(LocalizationsHelper.msgs.chooseLanguage),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

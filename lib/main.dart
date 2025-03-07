@@ -7,7 +7,7 @@ import 'package:newtest/l10n/l10n.dart';
 import 'package:newtest/presentation/screen/login_page.dart';
 import 'package:provider/provider.dart';
 import 'package:newtest/model/user_model.dart';
-
+import 'helper/navigation_helper.dart';
 import 'presentation/screen/adduser_page.dart';
 import 'presentation/screen/error_page.dart';
 import 'presentation/screen/languages_page.dart';
@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(
+      navigatorKey: appNavigatorKey,
       routes: [
         GoRoute(
           path: '/',

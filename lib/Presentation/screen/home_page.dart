@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/helper/localizationhelper.dart';
 import 'package:newtest/presentation/widget/custom_drawer.dart';
-import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:newtest/view_model/authentication.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class MyHomePage extends StatelessWidget {
     final currentUser = authService.currentUser ??
         UserModel(username: "Guest", email: "guest@example.com");
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.userManagement)),
+      appBar: AppBar(title: Text(LocalizationsHelper.msgs.userManagement)),
       drawer: CustomDrawer(userModel: currentUser),
       body: userViewModel.users.isEmpty && userViewModel.isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))
@@ -32,10 +32,10 @@ class MyHomePage extends StatelessWidget {
                 if (index < userViewModel.users.length) {
                   final user = userViewModel.users[index];
                   return ListTile(
-                    title: Text(AppLocalizations.of(context)!.name +
-                        '${user.username}'),
-                    subtitle: Text(
-                        "${AppLocalizations.of(context)!.email} ${user.email}"),
+                    title: Text(
+                        "${LocalizationsHelper.msgs.name}${user.username}"),
+                    subtitle:
+                        Text("${LocalizationsHelper.msgs.email} ${user.email}"),
                     onTap: () => UserDialog.show(context, user),
                   );
                 } else {

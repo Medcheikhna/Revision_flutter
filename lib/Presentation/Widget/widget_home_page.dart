@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/helper/localizationhelper.dart';
 import 'package:newtest/model/auth.dart';
-import 'package:/flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:provider/provider.dart';
 
@@ -15,9 +15,9 @@ class UserDialog {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(AppLocalizations.of(context)!.userManagement),
+        title: Text(LocalizationsHelper.msgs.userManagement),
         content: Text(
-          AppLocalizations.of(context)!.updateOrDelete,
+          LocalizationsHelper.msgs.updateOrDelete,
         ),
         actions: [
           TextButton(
@@ -25,7 +25,7 @@ class UserDialog {
               context.go("/updateuser_page", extra: user);
             },
             child: Text(
-              AppLocalizations.of(context)!.update,
+              LocalizationsHelper.msgs.update,
             ),
           ),
           TextButton(
@@ -36,14 +36,14 @@ class UserDialog {
               print("================");
             },
             child: Text(
-              AppLocalizations.of(context)!.delete,
+              LocalizationsHelper.msgs.delete,
             ),
           ),
           TextButton(
             onPressed: () {
               context.go('/');
             },
-            child: Text(AppLocalizations.of(context)!.cancel),
+            child: Text(LocalizationsHelper.msgs.cancel),
           ),
         ],
       ),
