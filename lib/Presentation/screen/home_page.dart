@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/helper/localizationhelper.dart';
+
+
 import 'package:newtest/presentation/widget/custom_drawer.dart';
 
-import 'package:newtest/view_model/authentication.dart';
-import 'package:provider/provider.dart';
 
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../model/auth.dart';
-import '../../view_model/userviewmodel.dart';
+import '../../view_model/auth_view_model.dart';
+import '../../view_model/user_view_model.dart';
 import '../widget/widget_home_page.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -16,12 +18,12 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.watch<UserViewModel>();
-    final authService = context.watch<AuthViewService>();
-    final currentUser = authService.currentUser ??
+    final authViewModel = context.watch<AuthViewModel>();
+    final currentUser = authViewModel.currentUser ??
         UserModel(username: "Guest", email: "guest@example.com");
 
     return Scaffold(
-      appBar: AppBar(title: Text(LocalizationsHelper.msgs.userManagement)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.userManagement)),
       drawer: CustomDrawer(userModel: currentUser),
       body: userViewModel.users.isEmpty && userViewModel.isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))
@@ -34,9 +36,9 @@ class MyHomePage extends StatelessWidget {
                   final user = userViewModel.users[index];
                   return ListTile(
                     title: Text(
-                        "${LocalizationsHelper.msgs.name}${user.username}"),
-                    subtitle:
-                        Text("${LocalizationsHelper.msgs.email} ${user.email}"),
+                        "${AppLocalizations.of(context)!.name}${user.username}"),
+                    subtitle: Text(
+                        "${AppLocalizations.of(context)!.email} ${user.email}"),
                     onTap: () => UserDialog.show(context, user),
                   );
                 } else {
@@ -51,8 +53,7 @@ class MyHomePage extends StatelessWidget {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigate to the AddUserPage
-          context.go('/adduser');
+          context.push('/adduser');
         },
         child: const Icon(Icons.add),
       ),

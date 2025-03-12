@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/helper/localizationhelper.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtest/model/user_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_model/userviewmodel.dart';
+import '../../view_model/user_view_model.dart';
 import '../widget/widget_update_page.dart';
 
 class UpdatePage extends StatefulWidget {
@@ -43,7 +43,7 @@ class _UpdatePageState extends State<UpdatePage> {
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(LocalizationsHelper.msgs.update)),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.update)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomFormWidget(

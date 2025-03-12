@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:newtest/helper/localizationhelper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../view_model/languagesservices.dart';
+import '../../view_model/language_view_model.dart';
 
 class Languages extends StatelessWidget {
   const Languages({super.key});
   @override
   Widget build(BuildContext context) {
-    final languageService = Provider.of<LanguageService>(context);
+    final languageService = Provider.of<LanguageViewModel>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(LocalizationsHelper.msgs.chooseLanguage)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.chooseLanguage)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

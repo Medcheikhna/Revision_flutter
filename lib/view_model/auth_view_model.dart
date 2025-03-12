@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:newtest/model/auth.dart';
 import 'package:newtest/services/fetcher.dart';
@@ -7,7 +6,7 @@ import 'package:newtest/services/fetcher.dart';
 import 'package:newtest/services/services_sharedpreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthViewService extends ChangeNotifier {
+class AuthViewModel extends ChangeNotifier {
   final Fetcher _fetcher = Fetcher();
   bool _isLoading = false;
   String? _errorMessage;
@@ -19,24 +18,16 @@ class AuthViewService extends ChangeNotifier {
   String? get token => _token;
   UserModel? get currentUser => _currentUser;
   bool? isFirstLaunch;
-  Future<void> checkAppStatus(BuildContext context) async {
+  Future<bool> checkAppStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
     if (isFirstLaunch == true) {
       await prefs.setBool('isFirstLaunch', false);
-
-      Future.microtask(() {
-        context.go('/languages');
-      });
-      notifyListeners();
-    } else if (isFirstLaunch == false) {
-      Future.microtask(() {
-        context.go('/');
-      });
-      notifyListeners();
     }
+
+    notifyListeners();
+    return isFirstLaunch!;
   }
 
   Future<bool> authenticate(String username, String password) async {

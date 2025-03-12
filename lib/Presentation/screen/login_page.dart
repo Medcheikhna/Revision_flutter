@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newtest/presentation/widget/custom_formfield.dart';
+import 'package:newtest/view_model/auth_view_model.dart';
 import 'package:provider/provider.dart';
-import '../../view_model/authentication.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,20 +11,29 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    final authViewModel = Provider.of<AuthViewService>(context, listen: false);
-    authViewModel.checkAppStatus(context);
+    checkAppStatus();
+  }
+
+  void checkAppStatus() async {
+    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    bool isFirstLaunch = await authViewModel.checkAppStatus();
+    if (isFirstLaunch) {
+      context.go('/languages');
+    } else {
+      context.go('/');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewService>(context);
+    final authViewModel = Provider.of<AuthViewModel>(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
       body: Padding(
@@ -63,10 +72,3 @@ class _LoginScreenState extends State<LoginScreen> with WidgetsBindingObserver {
     );
   }
 }
-
-
-/// provider for count 
-/// 
-/// 
-/// 
-/// 

@@ -3,7 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:newtest/helper/localizationhelper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../model/user_model.dart';
 import '../services/fetcher.dart';
@@ -31,11 +31,11 @@ class UserViewModel extends ChangeNotifier {
       print(data);
 
       final userBox = Hive.box<User>('users');
-      await userBox.clear(); 
+      await userBox.clear();
 
       if (data.isNotEmpty) {
         users.addAll(data);
-        await userBox.addAll(data); 
+        await userBox.addAll(data);
         notifyListeners();
       } else {
         notifyListeners();
@@ -53,12 +53,14 @@ class UserViewModel extends ChangeNotifier {
       if (success) {
         users.removeWhere((user) => user.id == id);
         notifyListeners();
-        EasyLoading.showSuccess(LocalizationsHelper.msgs.userUpdateSuccess);
+        EasyLoading.showSuccess(
+            AppLocalizations.of(context)!.userUpdateSuccess);
       } else {
-        EasyLoading.showError(LocalizationsHelper.msgs.failedDeleteUser);
+        EasyLoading.showError(AppLocalizations.of(context)!.failedDeleteUser);
       }
     } catch (e) {
-      EasyLoading.showError('${LocalizationsHelper.msgs.errorDeleteUser} $e');
+      EasyLoading.showError(
+          '${AppLocalizations.of(context)!.errorDeleteUser} $e');
     }
   }
 
@@ -66,11 +68,12 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> addUser(BuildContext context, User user) async {
     try {
-      EasyLoading.show(status: LocalizationsHelper.msgs.adding);
+      EasyLoading.show(status: AppLocalizations.of(context)!.adding);
 
       final newUser = await fetcher.post(user);
       EasyLoading.dismiss();
-      EasyLoading.showSuccess(LocalizationsHelper.msgs.userAddedSuccessfully);
+      EasyLoading.showSuccess(
+          AppLocalizations.of(context)!.userAddedSuccessfully);
 
       final userBox = Hive.box<User>('users');
       userBox.add(newUser);
@@ -80,7 +83,8 @@ class UserViewModel extends ChangeNotifier {
       context.go('/home');
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('${LocalizationsHelper.msgs.errorAddingUser} $e');
+      EasyLoading.showError(
+          '${AppLocalizations.of(context)!.errorAddingUser} $e');
     }
   }
 
@@ -93,7 +97,7 @@ class UserViewModel extends ChangeNotifier {
 
   Future<void> updateUser(BuildContext context, User updatedUser) async {
     try {
-      EasyLoading.show(status: LocalizationsHelper.msgs.updating);
+      EasyLoading.show(status: AppLocalizations.of(context)!.updating);
 
       final response = await fetcher.put(updatedUser.id!, updatedUser);
       if (response != null) {
@@ -108,15 +112,17 @@ class UserViewModel extends ChangeNotifier {
         }
 
         EasyLoading.dismiss();
-        EasyLoading.showSuccess(LocalizationsHelper.msgs.userUpdateSuccess);
+        EasyLoading.showSuccess(
+            AppLocalizations.of(context)!.userUpdateSuccess);
         context.go('/home');
       } else {
         EasyLoading.dismiss();
-        EasyLoading.showError(LocalizationsHelper.msgs.failedUpdateUser);
+        EasyLoading.showError(AppLocalizations.of(context)!.failedUpdateUser);
       }
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError('${LocalizationsHelper.msgs.errorUpdatingUser} $e');
+      EasyLoading.showError(
+          '${AppLocalizations.of(context)!.errorUpdatingUser} $e');
     }
   }
 }

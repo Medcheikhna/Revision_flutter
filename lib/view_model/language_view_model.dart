@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
 
-class LanguageService extends ChangeNotifier {
+class LanguageViewModel extends ChangeNotifier {
   static const String languageKey = "language_code";
   Locale _locale = Locale(ui.window.locale.languageCode);
 
@@ -15,12 +15,9 @@ class LanguageService extends ChangeNotifier {
 
     if (langCode != null) {
       _locale = Locale(langCode);
-    } else {
-      _locale = Locale(ui.window.locale.languageCode);
-      await prefs.setString(languageKey, _locale.languageCode);
     }
 
-    notifyListeners(); // Notify UI to update
+    notifyListeners();
   }
 
   /// Set a new locale and update UI

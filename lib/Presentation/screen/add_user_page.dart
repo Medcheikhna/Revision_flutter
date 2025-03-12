@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
-import 'package:newtest/helper/localizationhelper.dart';
 
-import 'package:newtest/presentation/widget/widget_adduser_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:newtest/presentation/widget/widget_add_page.dart';
 
 import 'package:newtest/model/user_model.dart';
 
-import 'package:provider/provider.dart';
+import 'package:newtest/view_model/user_view_model.dart';
 
-import '../../view_model/Userviewmodel.dart';
+import 'package:provider/provider.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({super.key});
@@ -27,8 +27,7 @@ class _AddUserPageState extends State<AddUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userViewModel =
-        context.watch<UserViewModel>(); 
+    final userViewModel = Provider.of<UserViewModel>(context, listen: false);
 
     return WillPopScope(
       onWillPop: () async {
@@ -36,7 +35,7 @@ class _AddUserPageState extends State<AddUserPage> {
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(LocalizationsHelper.msgs.addUser)),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.addUser)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: CustomFormWidget(

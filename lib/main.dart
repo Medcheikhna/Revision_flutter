@@ -5,18 +5,20 @@ import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:newtest/l10n/l10n.dart';
 import 'package:newtest/presentation/screen/login_page.dart';
+import 'package:newtest/view_model/auth_view_model.dart';
+
 import 'package:provider/provider.dart';
 import 'package:newtest/model/user_model.dart';
-import 'helper/navigation_helper.dart';
-import 'presentation/screen/adduser_page.dart';
+
+import 'presentation/screen/add_user_page.dart';
 import 'presentation/screen/error_page.dart';
 import 'presentation/screen/languages_page.dart';
 import 'presentation/screen/home_page.dart';
-import 'presentation/screen/updateuser_page.dart';
+import 'presentation/screen/update_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'view_model/authentication.dart';
-import 'view_model/languagesservices.dart';
-import 'view_model/userviewmodel.dart';
+
+import 'view_model/language_view_model.dart';
+import 'view_model/user_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +26,7 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>('users');
 
-  final languageService = LanguageService();
+  final languageService = LanguageViewModel();
   await languageService.loadLocale();
 
   runApp(
@@ -32,9 +34,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => languageService),
-        ChangeNotifierProvider(
-          create: (context) => AuthViewService(),
-        ),
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
       ],
       child: MyApp(),
     ),
@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(
-      navigatorKey: appNavigatorKey,
       routes: [
         GoRoute(
           path: '/',
@@ -62,11 +61,11 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => const MyHomePage(),
         ),
         GoRoute(
-          path: '/adduser',
+          path: '/add_user',
           builder: (context, state) => const AddUserPage(),
         ),
         GoRoute(
-          path: '/updateuser',
+          path: '/update_user',
           builder: (context, state) => const UpdatePage(),
         ),
       ],
@@ -76,7 +75,7 @@ class MyApp extends StatelessWidget {
       },
     );
 
-    return Consumer<LanguageService>(
+    return Consumer<LanguageViewModel>(
       builder: (context, languageService, child) {
         return MaterialApp.router(
           routerDelegate: router.routerDelegate,
