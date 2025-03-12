@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -52,10 +53,19 @@ class _AddUserPageState extends State<AddUserPage> {
                   name: _nameController.text,
                   phone: _phoneController.text,
                 );
+EasyLoading.show(status: AppLocalizations.of(context)!.adding);
 
                 // Use UserViewModel to add user
-                userViewModel.addUser(context, newUser).then((_) {
-                  context.go('/home');
+               userViewModel.addUser(newUser).then((_) {
+                  // Handle success or error after the addUser operation
+                  if (userViewModel.successMessage != null) {
+                    EasyLoading.dismiss();
+                    EasyLoading.showSuccess(AppLocalizations.of(context)!.userAddedSuccessfully);
+                    context.go('/home'); // Navigate after success
+                  } else if (userViewModel.errorMessage != null) {
+                    EasyLoading.dismiss();
+                    EasyLoading.showError('${AppLocalizations.of(context)!.errorAddingUser} ${userViewModel.errorMessage!}');
+                  }
                 });
               }
             },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,9 +10,7 @@ import '../../view_model/user_view_model.dart';
 import '../widget/widget_update_page.dart';
 
 class UpdatePage extends StatefulWidget {
-  const UpdatePage({
-    super.key,
-  });
+  const UpdatePage({super.key});
 
   @override
   State<UpdatePage> createState() => _UpdatePageState();
@@ -30,13 +29,14 @@ class _UpdatePageState extends State<UpdatePage> {
     final user = context.read<UserViewModel>().selectedUser!;
     phoneController = TextEditingController(text: user.phone);
     emailController = TextEditingController(text: user.email);
-    nameController = TextEditingController(text: user.name);
+    nameController = TextEditingController(text: user.username);
   }
 
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.watch<UserViewModel>();
     final user = userViewModel.selectedUser!;
+
     return WillPopScope(
       onWillPop: () async {
         context.go('/home');
@@ -51,16 +51,27 @@ class _UpdatePageState extends State<UpdatePage> {
             phoneController: phoneController,
             emailController: emailController,
             nameController: nameController,
-            onSubmit: () {
+            onSubmit: () async {
               if (_formKey.currentState!.validate()) {
                 final updatedUser = User(
                   id: user.id,
-                  name: nameController.text,
+                  username: nameController.text,
                   email: emailController.text,
                   phone: phoneController.text,
                 );
 
-                userViewModel.updateUser(context, updatedUser);
+                /// Call ViewModel without context
+                bool success = await userViewModel.updateUser(updatedUser);
+
+                /// Handle UI after updating
+                if (success) {
+                  EasyLoading.showSuccess(
+                      AppLocalizations.of(context)!.userUpdateSuccess);
+                  context.go('/home');
+                } else {
+                  EasyLoading.showError(
+                      AppLocalizations.of(context)!.failedUpdateUser);
+                }
               }
             },
           ),

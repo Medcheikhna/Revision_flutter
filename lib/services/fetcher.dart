@@ -81,7 +81,8 @@ class Fetcher {
       print('Status Code: ${response.statusCode}');
       print('Response Body: ${response.body}');
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return json.decode(response.body);
+        final Map<String, dynamic> jsonResponse = json.decode(response.body);
+        return User.fromJson(jsonResponse);
       } else {
         throw Exception('Failed to post data');
       }
@@ -155,32 +156,14 @@ class Fetcher {
       final response =
           await http.delete(Uri.parse('$baseUrl/$id'), headers: headers);
 
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return true; // ✅ Deletion successful
       } else {
         throw Exception('Failed to delete data');
       }
-    } on TimeoutException {
-      print("timout ");
-      throw Failure();
-    } on SocketException {
-      print("socket ");
-      throw Failure();
-    } on http.ClientException {
-      print("ClientException ");
-      throw Failure();
-    } on UnauthorisedException {
-      print("401-3");
-      throw Failure(code: 1);
-    } on BadRequestException {
-      print("bad 400");
-      throw Failure();
-    } on NotFoundException {
-      print("404");
-      throw Failure();
-    } on FetchDataException {
-      print("Erreur fetch data:");
-      throw Failure(message: "Erreur fetch data:");
+    } catch (e) {
+      print("Error deleting user: $e");
+      return false; // ❌ Deletion failed
     }
   }
 }

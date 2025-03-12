@@ -16,7 +16,7 @@
     "addUser": "Add User",
     "something_wrong": "Oops! Something went wrong",
     "goBack": "Go Back",
-    "userUpdateSuccess": "User deleted successfully!",
+    "userUpdateSuccess": "User update successfully!",
     "failedDeleteUser": "Failed to delete user",
     "errorDeleteUser": "Error deleting user",
     "userAddedSuccessfully": "User added successfully!",
@@ -29,5 +29,6 @@
     "changeTheme": "Change the theme",
     "logout": "Logout",
     "connectionFailed": "Connection failed",
-    "checkInternetConnection": "Check internet connection"
+    "checkInternetConnection": "Check internet connection",
+    "userDeletedSucceeded":"User deleted successfully"
 }

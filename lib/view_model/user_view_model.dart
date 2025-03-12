@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../model/user_model.dart';
 import '../services/fetcher.dart';
@@ -14,7 +12,8 @@ class UserViewModel extends ChangeNotifier {
 
   List<User> users = [];
   bool isLoading = false;
-
+  String? successMessage;
+  String? errorMessage;
   User? _selectedUser;
   User? get selectedUser => _selectedUser;
   UserViewModel() {
@@ -24,67 +23,83 @@ class UserViewModel extends ChangeNotifier {
   Future<void> fetchUsers() async {
     if (isLoading) return;
 
+    isLoading = true;
     notifyListeners();
 
     try {
+      // Fetch users from the backend
       final data = await fetcher.get();
-      print(data);
+      print('Fetched users from API: $data');
 
       final userBox = Hive.box<User>('users');
-      await userBox.clear();
 
       if (data.isNotEmpty) {
-        users.addAll(data);
-        await userBox.addAll(data);
+        for (var user in data) {
+          await userBox.put(user.id, user);
+        }
+
+        users = userBox.values.toList();
+
+        // Notify listeners to update the UI
         notifyListeners();
       } else {
+        print("No data received from backend");
         notifyListeners();
       }
     } catch (e) {
       print('Error fetching users: $e');
     } finally {
+      isLoading = false;
       notifyListeners();
     }
   }
 
-  Future<void> deleteUser(BuildContext context, int id) async {
+  Future<bool> deleteUser(int id) async {
     try {
       bool success = await fetcher.delete(id);
       if (success) {
         users.removeWhere((user) => user.id == id);
         notifyListeners();
-        EasyLoading.showSuccess(
-            AppLocalizations.of(context)!.userUpdateSuccess);
-      } else {
-        EasyLoading.showError(AppLocalizations.of(context)!.failedDeleteUser);
       }
+      return success;
     } catch (e) {
-      EasyLoading.showError(
-          '${AppLocalizations.of(context)!.errorDeleteUser} $e');
+      print(e);
+      return false;
     }
   }
 
   //==============adduserr=====================
 
-  Future<void> addUser(BuildContext context, User user) async {
-    try {
-      EasyLoading.show(status: AppLocalizations.of(context)!.adding);
+  Future<bool> addUser(User user) async {
+    isLoading = true;
+    notifyListeners();
 
+    try {
+      // Perform API call to add user
       final newUser = await fetcher.post(user);
-      EasyLoading.dismiss();
-      EasyLoading.showSuccess(
-          AppLocalizations.of(context)!.userAddedSuccessfully);
 
       final userBox = Hive.box<User>('users');
-      userBox.add(newUser);
-      users.add(newUser);
-      notifyListeners();
+      print("hello in function ================================");
+      // Ensure the user has a valid ID before adding
+      if (newUser.id != null) {
+        userBox.put(newUser.id, newUser); // Store the user using ID as key
+      } else {
+        userBox.add(newUser); // If no ID, add normally (not recommended)
+      }
 
-      context.go('/home');
+      users = userBox.values.toList(); // Refresh local list
+      successMessage = "User added successfully";
+      print(successMessage); // Localized message
+      notifyListeners();
+      return true; // Indicate success
     } catch (e) {
-      EasyLoading.dismiss();
-      EasyLoading.showError(
-          '${AppLocalizations.of(context)!.errorAddingUser} $e');
+      errorMessage = "Error adding user: $e"; // Localized error message
+      print(errorMessage);
+      notifyListeners();
+      return false; // Indicate error
+    } finally {
+      isLoading = false;
+      notifyListeners(); // Update loading state
     }
   }
 
@@ -95,34 +110,39 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateUser(BuildContext context, User updatedUser) async {
+  Future<bool> updateUser(User updatedUser) async {
     try {
-      EasyLoading.show(status: AppLocalizations.of(context)!.updating);
+      EasyLoading.show(status: 'Updating...');
 
       final response = await fetcher.put(updatedUser.id!, updatedUser);
       if (response != null) {
         final userBox = Hive.box<User>('users');
 
-        // Find & update user in local storage
-        final index = users.indexWhere((user) => user.id == updatedUser.id);
-        if (index != -1) {
-          users[index] = updatedUser;
-          userBox.putAt(index, updatedUser);
+        // Check if the user exists in Hive using user.id as the key
+        final existingUser = userBox.get(updatedUser.id);
+        if (existingUser != null) {
+          // User found, update the user in Hive and memory
+          await userBox.put(updatedUser.id, updatedUser); // Update Hive data
+          final index = users.indexWhere((user) => user.id == updatedUser.id);
+          if (index != -1) {
+            users[index] = updatedUser; // Update in-memory list
+          }
+          EasyLoading.dismiss();
           notifyListeners();
+          return true; // Success
+        } else {
+          EasyLoading.dismiss();
+          print("User not found in Hive!");
+          return false; // Error - user not found
         }
-
-        EasyLoading.dismiss();
-        EasyLoading.showSuccess(
-            AppLocalizations.of(context)!.userUpdateSuccess);
-        context.go('/home');
       } else {
         EasyLoading.dismiss();
-        EasyLoading.showError(AppLocalizations.of(context)!.failedUpdateUser);
+        return false; // Failed to update on server
       }
     } catch (e) {
       EasyLoading.dismiss();
-      EasyLoading.showError(
-          '${AppLocalizations.of(context)!.errorUpdatingUser} $e');
+      print("Error updating user: $e");
+      return false; // Error
     }
   }
 }

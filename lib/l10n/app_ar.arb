@@ -29,5 +29,6 @@
     "changeTheme": "تغيير الثيم",
     "logout": "الخروج",
     "connectionFailed": "فشل الاتصال",
-    "checkInternetConnection": "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى"
+    "checkInternetConnection": "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى",
+    "userDeletedSucceeded":"تم حذف المستخدم بنجاح" 
 }
