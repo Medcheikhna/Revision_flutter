@@ -5,8 +5,7 @@ import 'package:newtest/presentation/widget/custom_drawer.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../model/auth.dart';
-import '../../view_model/auth_view_model.dart';
+
 import '../../view_model/user_view_model.dart';
 import '../widget/widget_home_page.dart';
 
@@ -16,13 +15,11 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.watch<UserViewModel>();
-    final authViewModel = context.watch<AuthViewModel>();
-    final currentUser = authViewModel.currentUser ??
-        UserModel(username: "Guest", email: "guest@example.com");
-
+   
+    
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.userManagement)),
-      drawer: CustomDrawer(userModel: currentUser),
+      drawer: CustomDrawer(),
       body: userViewModel.users.isEmpty && userViewModel.isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.amber))
           : ListView.builder(

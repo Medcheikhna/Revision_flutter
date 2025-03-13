@@ -11,12 +11,12 @@ class AuthViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   String? _token;
-  UserModel? _currentUser;
+  Auth? _currentAuth;
 
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String? get token => _token;
-  UserModel? get currentUser => _currentUser;
+  Auth? get currentAuth => _currentAuth;
   bool? isFirstLaunch;
   Future<bool> checkAppStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -42,6 +42,7 @@ class AuthViewModel extends ChangeNotifier {
       if (response.token!.isNotEmpty) {
         _token = response.token;
         await SharedPrefs.saveToken(_token!);
+        _currentAuth = response;
         _isLoading = false;
         notifyListeners();
         return true;
@@ -61,7 +62,7 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> logout() async {
     await SharedPrefs.removeToken();
     _token = null;
-    _currentUser = null;
+    _currentAuth = null;
     notifyListeners();
   }
 }

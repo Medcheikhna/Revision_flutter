@@ -12,7 +12,7 @@ class Fetcher {
   final Map<String, String> headers;
   Fetcher({this.headers = const {}});
 
-  Future<UserModel> login(String username, String password) async {
+  Future<Auth> login(String username, String password) async {
     print("$username : $password");
     try {
       final response = await http
@@ -30,7 +30,7 @@ class Fetcher {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        return UserModel.fromJson(data);
+        return Auth.fromJson(data);
       } else {
         throw Exception('Invalid credentials');
       }
@@ -156,14 +156,14 @@ class Fetcher {
       final response =
           await http.delete(Uri.parse('$baseUrl/$id'), headers: headers);
 
-      if (response.statusCode == 200 || response.statusCode == 204) {
-        return true; // ✅ Deletion successful
+      if (response.statusCode == 200) {
+        return true;
       } else {
         throw Exception('Failed to delete data');
       }
     } catch (e) {
       print("Error deleting user: $e");
-      return false; // ❌ Deletion failed
+      return false;
     }
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:newtest/model/auth.dart';
 import 'package:newtest/view_model/auth_view_model.dart';
 
 import 'package:newtest/view_model/language_view_model.dart';
@@ -10,13 +9,11 @@ import 'package:newtest/view_model/language_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final UserModel userModel;
-
-  const CustomDrawer({super.key, required this.userModel});
+  const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    final authViewModel = context.watch<AuthViewModel>();
     final languageService =
         Provider.of<LanguageViewModel>(context, listen: false);
 
@@ -24,7 +21,7 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          _buildUserHeader(userModel),
+          _buildUserHeader(authViewModel),
           ListTile(
             leading: const Icon(Icons.settings),
             title: Text(AppLocalizations.of(context)!.settings),
@@ -65,10 +62,10 @@ class CustomDrawer extends StatelessWidget {
   }
 
   /// 🔹 User Header with Profile Info
-  Widget _buildUserHeader(UserModel userModel) {
+  Widget _buildUserHeader(AuthViewModel authViewModel) {
     return UserAccountsDrawerHeader(
-      accountName: Text("User: ${userModel.username}"),
-      accountEmail: Text("Email: ${userModel.email}"),
+      accountName: Text("User: ${authViewModel.currentAuth!.username}"),
+      accountEmail: Text("Email: ${authViewModel.currentAuth!.email}"),
       currentAccountPicture: const CircleAvatar(
         backgroundColor: Colors.white,
         child: Icon(Icons.person, size: 40, color: Colors.blue),
