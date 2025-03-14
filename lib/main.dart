@@ -58,18 +58,21 @@ class MyApp extends StatelessWidget {
         ),
         GoRoute(
           path: '/home',
+
           builder: (context, state) => const MyHomePage(),
         ),
         GoRoute(
           path: '/add_user',
+
           builder: (context, state) => const AddUserPage(),
         ),
         GoRoute(
+
           path: '/update_user',
           builder: (context, state) => const UpdatePage(),
         ),
       ],
-      errorBuilder: (context, state) {
+      errorBuilder: (context, state) { 
         print("Error occurred: ${state.error}");
         return const ErrorPage();
       },

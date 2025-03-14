@@ -60,10 +60,8 @@ class _UpdatePageState extends State<UpdatePage> {
                   phone: phoneController.text,
                 );
 
-                
                 bool success = await userViewModel.updateUser(updatedUser);
 
-               
                 if (success) {
                   EasyLoading.showSuccess(
                       AppLocalizations.of(context)!.userUpdateSuccess);

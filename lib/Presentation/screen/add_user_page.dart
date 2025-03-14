@@ -28,7 +28,7 @@ class _AddUserPageState extends State<AddUserPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    final userViewModel = context.read<UserViewModel>();
 
     return WillPopScope(
       onWillPop: () async {
@@ -53,18 +53,20 @@ class _AddUserPageState extends State<AddUserPage> {
                   name: _nameController.text,
                   phone: _phoneController.text,
                 );
-EasyLoading.show(status: AppLocalizations.of(context)!.adding);
+                EasyLoading.show(status: AppLocalizations.of(context)!.adding);
 
                 // Use UserViewModel to add user
-               userViewModel.addUser(newUser).then((_) {
+                userViewModel.addUser(newUser).then((_) {
                   // Handle success or error after the addUser operation
                   if (userViewModel.successMessage != null) {
                     EasyLoading.dismiss();
-                    EasyLoading.showSuccess(AppLocalizations.of(context)!.userAddedSuccessfully);
+                    EasyLoading.showSuccess(
+                        AppLocalizations.of(context)!.userAddedSuccessfully);
                     context.go('/home'); // Navigate after success
                   } else if (userViewModel.errorMessage != null) {
                     EasyLoading.dismiss();
-                    EasyLoading.showError('${AppLocalizations.of(context)!.errorAddingUser} ${userViewModel.errorMessage!}');
+                    EasyLoading.showError(
+                        '${AppLocalizations.of(context)!.errorAddingUser} ${userViewModel.errorMessage!}');
                   }
                 });
               }

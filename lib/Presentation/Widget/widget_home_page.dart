@@ -15,8 +15,7 @@ class UserDialog {
     showDialog(
       context: context,
       builder: (context) {
-        final userViewModel =
-            Provider.of<UserViewModel>(context, listen: false);
+        final userViewModel = context.read<UserViewModel>();
         return AlertDialog(
           title: Text(AppLocalizations.of(context)!.userManagement),
           content: Text(AppLocalizations.of(context)!.updateOrDelete),

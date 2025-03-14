@@ -59,7 +59,7 @@ class MyHomePage extends StatelessWidget {
                           style: TextStyle(color: Colors.grey[700]),
                         ),
                         trailing: const Icon(
-                          Icons.arrow_forward_ios,
+                          Icons.arrow_forward,
                           size: 18,
                         ),
                         onTap: () => UserDialog.show(context, user),
