@@ -11,30 +11,31 @@ class Languages extends StatelessWidget {
   const Languages({super.key});
   @override
   Widget build(BuildContext context) {
-    final languageService = Provider.of<LanguageViewModel>(context);
-
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.chooseLanguage)),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                await languageService.setLocale(Locale('en'));
-                context.go('/');
-              },
-              child: Text('English'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                languageService.setLocale(Locale('ar'));
-                context.go('/');
-              },
-              child: Text('العربية'),
-            ),
-          ],
-        ),
+        child: Consumer<LanguageViewModel>(
+            builder: (context, languageService, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  await languageService.setLocale(Locale('en'));
+                  context.go('/');
+                },
+                child: Text('English'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  languageService.setLocale(Locale('ar'));
+                  context.go('/');
+                },
+                child: Text('العربية'),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
