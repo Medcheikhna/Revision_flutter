@@ -12,8 +12,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userViewModel = context.watch<UserViewModel>();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -24,57 +22,62 @@ class MyHomePage extends StatelessWidget {
         elevation: 4,
       ),
       drawer: const CustomDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: userViewModel.users.isEmpty && userViewModel.isLoading
-            ? const Center(
-                child: CircularProgressIndicator(color: Colors.orange),
-              )
-            : ListView.builder(
-                controller: userViewModel.scrollController,
-                itemCount: userViewModel.users.length +
-                    (userViewModel.isLoading ? 1 : 0),
-                itemBuilder: (context, index) {
-                  if (index < userViewModel.users.length) {
-                    final user = userViewModel.users[index];
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 4,
-                      margin: const EdgeInsets.symmetric(vertical: 8),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(16),
-                        leading: CircleAvatar(
-                          child: Text(user.username![0].toUpperCase(),
-                              style: const TextStyle(color: Colors.white)),
-                        ),
-                        title: Text(
-                          "${AppLocalizations.of(context)!.name} ${user.username}",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        subtitle: Text(
-                          "${AppLocalizations.of(context)!.email} ${user.email}",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_forward,
-                          size: 18,
-                        ),
-                        onTap: () => UserDialog.show(context, user),
-                      ),
-                    );
-                  } else {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: CircularProgressIndicator(color: Colors.orange),
-                      ),
-                    );
-                  }
-                },
-              ),
+      body: Consumer<UserViewModel>(
+        builder: (context, userViewModel, child) {
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: userViewModel.users.isEmpty && userViewModel.isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(color: Colors.orange),
+                  )
+                : ListView.builder(
+                    controller: userViewModel.scrollController,
+                    itemCount: userViewModel.users.length +
+                        (userViewModel.isLoading ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index < userViewModel.users.length) {
+                        final user = userViewModel.users[index];
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 4,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(16),
+                            leading: CircleAvatar(
+                              child: Text(user.username![0].toUpperCase(),
+                                  style: const TextStyle(color: Colors.white)),
+                            ),
+                            title: Text(
+                              "${AppLocalizations.of(context)!.name} ${user.username}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            subtitle: Text(
+                              "${AppLocalizations.of(context)!.email} ${user.email}",
+                              style: TextStyle(color: Colors.grey[700]),
+                            ),
+                            trailing: const Icon(
+                              Icons.arrow_forward,
+                              size: 18,
+                            ),
+                            onTap: () => UserDialog.show(context, user),
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child:
+                                CircularProgressIndicator(color: Colors.orange),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/add_user'),

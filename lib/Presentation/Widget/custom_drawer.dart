@@ -13,15 +13,15 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = context.watch<AuthViewModel>();
-    final languageService =
-        Provider.of<LanguageViewModel>(context, listen: false);
-
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          _buildUserHeader(authViewModel),
+          Consumer<AuthViewModel>(
+            builder: (context, authViewModel, child) {
+              return _buildUserHeader(authViewModel);
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.settings),
             title: Text(AppLocalizations.of(context)!.settings),
@@ -40,20 +40,28 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: Text(AppLocalizations.of(context)!.chooseLanguage),
-            onTap: () {
-              _showLanguageDialog(context, languageService);
+          Consumer<LanguageViewModel>(
+            builder: (context, languageViewModel, child) {
+              return ListTile(
+                leading: const Icon(Icons.language),
+                title: Text(AppLocalizations.of(context)!.chooseLanguage),
+                onTap: () {
+                  _showLanguageDialog(context, languageViewModel);
+                },
+              );
             },
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: Text(AppLocalizations.of(context)!.logout),
-            onTap: () async {
-              await authViewModel.logout();
-              context.go('/');
+          Consumer<AuthViewModel>(
+            builder: (context, authViewModel, child) {
+              return ListTile(
+                leading: const Icon(Icons.logout),
+                title: Text(AppLocalizations.of(context)!.logout),
+                onTap: () {
+                  authViewModel.logout();
+                  context.go('/');
+                },
+              );
             },
           ),
         ],
@@ -75,7 +83,7 @@ class CustomDrawer extends StatelessWidget {
 
   /// 🔹 Show Language Change Dialog
   void _showLanguageDialog(
-      BuildContext context, LanguageViewModel languageService) {
+      BuildContext context, LanguageViewModel languageViewModel) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -86,14 +94,14 @@ class CustomDrawer extends StatelessWidget {
             ListTile(
               title: const Text("English"),
               onTap: () {
-                languageService.setLocale(const Locale('en'));
+                languageViewModel.setLocale(const Locale('en'));
                 Navigator.of(context).pop();
               },
             ),
             ListTile(
               title: const Text("العربية"),
               onTap: () {
-                languageService.setLocale(const Locale('ar'));
+                languageViewModel.setLocale(const Locale('ar'));
                 Navigator.of(context).pop();
               },
             ),
