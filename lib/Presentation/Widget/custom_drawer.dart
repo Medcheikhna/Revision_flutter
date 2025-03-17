@@ -57,9 +57,11 @@ class CustomDrawer extends StatelessWidget {
               return ListTile(
                 leading: const Icon(Icons.logout),
                 title: Text(AppLocalizations.of(context)!.logout),
-                onTap: () {
-                  authViewModel.logout();
-                  context.go('/');
+                onTap: () async {
+                  await authViewModel.logout();
+                  if (context.mounted) {
+                    context.go('/');
+                  }
                 },
               );
             },
@@ -71,9 +73,11 @@ class CustomDrawer extends StatelessWidget {
 
   /// 🔹 User Header with Profile Info
   Widget _buildUserHeader(AuthViewModel authViewModel) {
+    final user = authViewModel.currentAuth;
     return UserAccountsDrawerHeader(
-      accountName: Text("User: ${authViewModel.currentAuth!.username}"),
-      accountEmail: Text("Email: ${authViewModel.currentAuth!.email}"),
+      accountName: Text(user != null ? "User: ${user.username}" : "Guest"),
+      accountEmail:
+          Text(user != null ? "Email: ${user.email}" : "No email available"),
       currentAccountPicture: const CircleAvatar(
         backgroundColor: Colors.white,
         child: Icon(Icons.person, size: 40, color: Colors.blue),
