@@ -31,7 +31,6 @@ class MyHomePage extends StatelessWidget {
                     child: CircularProgressIndicator(color: Colors.orange),
                   )
                 : ListView.builder(
-                    controller: userViewModel.scrollController,
                     itemCount: userViewModel.users.length +
                         (userViewModel.isLoading ? 1 : 0),
                     itemBuilder: (context, index) {

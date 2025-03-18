@@ -8,7 +8,6 @@ import '../services/fetcher.dart';
 
 class UserViewModel extends ChangeNotifier {
   final Fetcher fetcher = Fetcher();
-  final ScrollController scrollController = ScrollController();
 
   List<User> users = [];
   bool isLoading = false;
