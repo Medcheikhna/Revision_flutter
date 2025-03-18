@@ -27,7 +27,7 @@ class AuthViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
-    return isFirstLaunch!;
+    return isFirstLaunch! ;
   }
 
   Future<bool> authenticate(String username, String password) async {
