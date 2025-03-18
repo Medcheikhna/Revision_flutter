@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
       routes: [
         GoRoute(
           path: '/',
-          builder: (context, state) => const LoginScreen(),
+          builder: (context, state) => const LoginPage(),
         ),
         GoRoute(
           path: '/languages',

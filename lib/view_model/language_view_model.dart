@@ -13,9 +13,7 @@ class LanguageViewModel extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? langCode = prefs.getString(languageKey);
 
-    if (langCode != null) {
-      _locale = Locale(langCode);
-    }
+    _locale = Locale(langCode!);
 
     notifyListeners();
   }

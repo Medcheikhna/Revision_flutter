@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newtest/presentation/widget/custom_formfield.dart';
 import 'package:newtest/view_model/auth_view_model.dart';
+
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void checkAppStatus() async {
-    final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
+    final authViewModel = context.read<AuthViewModel>();
     bool isFirstLaunch = await authViewModel.checkAppStatus();
     if (isFirstLaunch) {
       context.go('/languages');
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             LoginForm(
               usernameController: _usernameController,
               passwordController: _passwordController,
-              onSubmit: () async {
+              onSubmitPressed: () async {
                 final success = await authViewModel.authenticate(
                   _usernameController.text.trim(),
                   _passwordController.text.trim(),

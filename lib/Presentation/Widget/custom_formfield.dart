@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class LoginForm extends StatefulWidget {
   final TextEditingController usernameController;
   final TextEditingController passwordController;
-  final VoidCallback onSubmit;
+  final VoidCallback onSubmitPressed;
 
   const LoginForm({
     super.key,
     required this.usernameController,
     required this.passwordController,
-    required this.onSubmit,
+    required this.onSubmitPressed,
   });
 
   @override
@@ -55,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                widget.onSubmit();
+                widget.onSubmitPressed();
               }
             },
             child: const Text("Login"),
