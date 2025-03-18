@@ -12,6 +12,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controllerField = context.read<UserViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -79,7 +81,13 @@ class MyHomePage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/add_user'),
+        onPressed: () {
+          controllerField.emailController.clear();
+          controllerField.usernameController.clear();
+          controllerField.phoneController.clear();
+          controllerField.nameController.clear();
+          context.push('/add_user');
+        },
         child: const Icon(
           Icons.add,
         ),

@@ -7,6 +7,12 @@ import '../../model/user_model.dart';
 import '../services/fetcher.dart';
 
 class UserViewModel extends ChangeNotifier {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   final Fetcher fetcher = Fetcher();
 
   List<User> users = [];
@@ -100,6 +106,9 @@ class UserViewModel extends ChangeNotifier {
 
   void setSelectedUser(User user) {
     _selectedUser = user;
+    phoneController = TextEditingController(text: _selectedUser!.phone);
+    emailController = TextEditingController(text: _selectedUser!.email);
+    nameController = TextEditingController(text: _selectedUser!.username);
     notifyListeners();
   }
 

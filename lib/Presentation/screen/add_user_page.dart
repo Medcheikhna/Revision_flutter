@@ -1,35 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtest/presentation/widget/widget_add_page.dart';
 
-import 'package:newtest/model/user_model.dart';
-
-import 'package:newtest/view_model/user_view_model.dart';
-
-import 'package:provider/provider.dart';
-
-class AddUserPage extends StatefulWidget {
+class AddUserPage extends StatelessWidget {
   const AddUserPage({super.key});
 
   @override
-  State<AddUserPage> createState() => _AddUserPageState();
-}
-
-class _AddUserPageState extends State<AddUserPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    final userViewModel = context.read<UserViewModel>();
-
     return WillPopScope(
       onWillPop: () async {
         context.go('/home');
@@ -39,39 +19,7 @@ class _AddUserPageState extends State<AddUserPage> {
         appBar: AppBar(title: Text(AppLocalizations.of(context)!.addUser)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: CustomFormWidget(
-            formKey: _formKey,
-            nameController: _nameController,
-            emailController: _emailController,
-            usernameController: _usernameController,
-            phoneController: _phoneController,
-            onSubmit: () {
-              if (_formKey.currentState!.validate()) {
-                final newUser = User(
-                  username: _usernameController.text,
-                  email: _emailController.text,
-                  name: _nameController.text,
-                  phone: _phoneController.text,
-                );
-                EasyLoading.show(status: AppLocalizations.of(context)!.adding);
-
-                // Use UserViewModel to add user
-                userViewModel.addUser(newUser).then((_) {
-                  // Handle success or error after the addUser operation
-                  if (userViewModel.successMessage != null) {
-                    EasyLoading.dismiss();
-                    EasyLoading.showSuccess(
-                        AppLocalizations.of(context)!.userAddedSuccessfully);
-                    context.go('/home'); // Navigate after success
-                  } else if (userViewModel.errorMessage != null) {
-                    EasyLoading.dismiss();
-                    EasyLoading.showError(
-                        '${AppLocalizations.of(context)!.errorAddingUser} ${userViewModel.errorMessage!}');
-                  }
-                });
-              }
-            },
-          ),
+          child: CustomFormWidget(),
         ),
       ),
     );
