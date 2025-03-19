@@ -8,8 +8,8 @@ import 'package:newtest/model/user_model.dart';
 import 'package:newtest/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 
-class CustomFormWidget extends StatelessWidget {
-  const CustomFormWidget({super.key});
+class WidgetAddPage extends StatelessWidget {
+  const WidgetAddPage({super.key});
 
   @override
   Widget build(BuildContext context) {

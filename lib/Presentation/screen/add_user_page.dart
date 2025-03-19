@@ -19,7 +19,7 @@ class AddUserPage extends StatelessWidget {
         appBar: AppBar(title: Text(AppLocalizations.of(context)!.addUser)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: CustomFormWidget(),
+          child: WidgetAddPage(),
         ),
       ),
     );

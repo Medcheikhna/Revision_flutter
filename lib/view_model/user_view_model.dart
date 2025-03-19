@@ -12,8 +12,10 @@ class UserViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
 
-  final Fetcher fetcher = Fetcher();
+
+  final fetcher = Fetcher();
 
   List<User> users = [];
   bool isLoading = false;

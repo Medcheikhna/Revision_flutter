@@ -63,7 +63,7 @@ class MyHomePage extends StatelessWidget {
                               Icons.arrow_forward,
                               size: 18,
                             ),
-                            onTap: () => UserDialog.show(context, user),
+                            onTap: () => WidgetHomePage.show(context, user),
                           ),
                         );
                       } else {

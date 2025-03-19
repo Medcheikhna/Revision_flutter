@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../model/user_model.dart';
 
-class UserDialog {
+class WidgetHomePage {
   static void show(BuildContext context, User user) {
     print("==========ShowDialogue Page =====");
 

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:newtest/presentation/widget/widget_update_page.dart';
 
-import '../widget/widget_update_page.dart';
+
 
 class UpdatePage extends StatelessWidget {
   const UpdatePage({super.key});
@@ -20,7 +21,7 @@ class UpdatePage extends StatelessWidget {
         appBar: AppBar(title: Text(AppLocalizations.of(context)!.update)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: CustomFormWidget(),
+          child: WidgetUpdatePage(),
         ),
       ),
     );

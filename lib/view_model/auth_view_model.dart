@@ -7,6 +7,10 @@ import 'package:newtest/services/services_sharedpreference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthViewModel extends ChangeNotifier {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  
   final Fetcher _fetcher = Fetcher();
   bool _isLoading = false;
   String? _errorMessage;
@@ -27,7 +31,7 @@ class AuthViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
-    return isFirstLaunch! ;
+    return isFirstLaunch!;
   }
 
   Future<bool> authenticate(String username, String password) async {
