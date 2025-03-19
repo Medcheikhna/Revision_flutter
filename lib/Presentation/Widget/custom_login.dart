@@ -10,7 +10,7 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authViewModel = Provider.of<AuthViewModel>(context);
+    final authViewModel = context.read<AuthViewModel>();
     return Form(
       key: authViewModel.formKey, // Assigning the GlobalKey to Form
       child: Column(
