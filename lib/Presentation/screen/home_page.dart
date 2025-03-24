@@ -12,85 +12,87 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controllerField = context.read<UserViewModel>();
+    final userViewModel = context.watch<UserViewModel>();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.userManagement,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+        title: userViewModel.isSearching
+            ? TextField(
+                controller: userViewModel.searchController,
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.searchUser,
+                  border: InputBorder.none,
+                  hintStyle: TextStyle(color: Colors.black),
+                ),
+                style: TextStyle(color: Colors.brown),
+              )
+            : Text(
+                AppLocalizations.of(context)!.userManagement,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
         centerTitle: true,
         elevation: 4,
+        actions: [
+          IconButton(
+            icon: Icon(userViewModel.isSearching ? Icons.close : Icons.search),
+            onPressed: () {
+              userViewModel.toggleSearch(); 
+            },
+          ),
+        ],
       ),
       drawer: const CustomDrawer(),
-      body: Consumer<UserViewModel>(
-        builder: (context, userViewModel, child) {
-          return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: userViewModel.users.isEmpty && userViewModel.isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(color: Colors.orange),
-                  )
-                : ListView.builder(
-                    itemCount: userViewModel.users.length +
-                        (userViewModel.isLoading ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (index < userViewModel.users.length) {
-                        final user = userViewModel.users[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 4,
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(16),
-                            leading: CircleAvatar(
-                              child: Text(user.username![0].toUpperCase(),
-                                  style: const TextStyle(color: Colors.white)),
-                            ),
-                            title: Text(
-                              "${AppLocalizations.of(context)!.name} ${user.username}",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            subtitle: Text(
-                              "${AppLocalizations.of(context)!.email} ${user.email}",
-                              style: TextStyle(color: Colors.grey[700]),
-                            ),
-                            trailing: const Icon(
-                              Icons.arrow_forward,
-                              size: 18,
-                            ),
-                            onTap: () => WidgetHomePage.show(context, user),
-                          ),
-                        );
-                      } else {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(12.0),
-                            child:
-                                CircularProgressIndicator(color: Colors.orange),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-          );
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: userViewModel.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(color: Colors.orange),
+              )
+            : ListView.builder(
+                itemCount: userViewModel.filteredUsers.length,
+                itemBuilder: (context, index) {
+                  final user = userViewModel.filteredUsers[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      leading: CircleAvatar(
+                        child: Text(user.username![0].toUpperCase(),
+                            style: const TextStyle(color: Colors.white)),
+                      ),
+                      title: Text(
+                        "${AppLocalizations.of(context)!.name} ${user.username}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      subtitle: Text(
+                        "${AppLocalizations.of(context)!.email} ${user.email}",
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                      trailing: const Icon(
+                        Icons.arrow_forward,
+                        size: 18,
+                      ),
+                      onTap: () => WidgetHomePage.show(context, user),
+                    ),
+                  );
+                },
+              ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          controllerField.emailController.clear();
-          controllerField.usernameController.clear();
-          controllerField.phoneController.clear();
-          controllerField.nameController.clear();
+          userViewModel.emailController.clear();
+          userViewModel.usernameController.clear();
+          userViewModel.phoneController.clear();
+          userViewModel.nameController.clear();
           context.push('/add_user');
         },
-        child: const Icon(
-          Icons.add,
-        ),
+        child: const Icon(Icons.add),
       ),
     );
   }

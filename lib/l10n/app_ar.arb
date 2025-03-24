@@ -30,5 +30,6 @@
     "logout": "الخروج",
     "connectionFailed": "فشل الاتصال",
     "checkInternetConnection": "يرجى التحقق من اتصالك بالإنترنت ثم المحاولة مرة أخرى",
-    "userDeletedSucceeded":"تم حذف المستخدم بنجاح" 
+    "userDeletedSucceeded":"تم حذف المستخدم بنجاح" ,
+    "searchUser":"البحث عن مستخدم"
 }

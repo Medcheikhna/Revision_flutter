@@ -30,5 +30,6 @@
     "logout": "Logout",
     "connectionFailed": "Connection failed",
     "checkInternetConnection": "Check internet connection",
-    "userDeletedSucceeded":"User deleted successfully"
+    "userDeletedSucceeded":"User deleted successfully",
+    "searchUser":"Search user"
 }

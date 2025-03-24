@@ -12,8 +12,7 @@ class UserViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
+  TextEditingController searchController = TextEditingController();
 
   final fetcher = Fetcher();
 
@@ -22,9 +21,25 @@ class UserViewModel extends ChangeNotifier {
   String? successMessage;
   String? errorMessage;
   User? _selectedUser;
+  String searchQuery = "";
+  bool isSearching = false;
   User? get selectedUser => _selectedUser;
   UserViewModel() {
     fetchUsers();
+    searchController.addListener(_onSearchChanged);
+  }
+  void _onSearchChanged() {
+    searchQuery = searchController.text.toLowerCase();
+    notifyListeners();
+  }
+
+  List<User> get filteredUsers {
+    if (searchQuery.isEmpty) return users;
+    return users
+        .where((user) =>
+            user.username!.toLowerCase().contains(searchQuery) ||
+            user.email!.toLowerCase().contains(searchQuery))
+        .toList();
   }
 
   Future<void> fetchUsers() async {
@@ -146,5 +161,14 @@ class UserViewModel extends ChangeNotifier {
       print("Error updating user: $e");
       return false;
     }
+  }
+
+  void toggleSearch() {
+    isSearching = !isSearching;
+    if (!isSearching) {
+      searchController.clear();
+      searchQuery = "";
+    }
+    notifyListeners();
   }
 }
