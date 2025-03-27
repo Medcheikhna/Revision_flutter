@@ -26,14 +26,11 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>('users');
 
-  final languageService = LanguageViewModel();
-  await languageService.loadLocale();
-
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserViewModel()),
-        ChangeNotifierProvider(create: (_) => languageService),
+        ChangeNotifierProvider(create: (_) => LanguageViewModel()),
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
       ],
       child: MyApp(),
@@ -82,7 +79,9 @@ class MyApp extends StatelessWidget {
           routeInformationParser: router.routeInformationParser,
           routeInformationProvider: router.routeInformationProvider,
           title: "User Manage App",
+          themeMode: languageService.themeMode,
           theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
           debugShowCheckedModeBanner: false,
           builder: EasyLoading.init(),
           locale: languageService.locale,

@@ -10,7 +10,7 @@ class AuthViewModel extends ChangeNotifier {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  
+
   final Fetcher _fetcher = Fetcher();
   bool _isLoading = false;
   String? _errorMessage;
@@ -54,8 +54,8 @@ class AuthViewModel extends ChangeNotifier {
         _errorMessage = "Identifiants incorrects";
       }
     } catch (e) {
-      print("Erreur lors de l'authentification: $e");
-      _errorMessage = "Impossible de se connecter. Vérifiez votre connexion.";
+      print("Authentication error: $e");
+      _errorMessage = "Unable to connect. Check your connection ";
     } finally {
       _isLoading = false;
       notifyListeners();

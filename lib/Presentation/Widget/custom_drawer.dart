@@ -31,12 +31,17 @@ class CustomDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.brightness_6),
-            title: Text(AppLocalizations.of(context)!.changeTheme),
-            onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Theme change coming soon!")),
+          Consumer<LanguageViewModel>(
+            builder: (context, themChange, child) {
+              return ListTile(
+                leading: const Icon(Icons.brightness_6),
+                title: Text(AppLocalizations.of(context)!.changeTheme),
+                onTap: () {
+                  themChange.toggleTheme();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Theme change coming soon!")),
+                  );
+                },
               );
             },
           ),
@@ -65,7 +70,7 @@ class CustomDrawer extends StatelessWidget {
                 },
               );
             },
-          ), 
+          ),
         ],
       ),
     );
