@@ -8,10 +8,8 @@ class LanguageViewModel extends ChangeNotifier {
 
   Locale get locale => _locale;
   bool _isDarkMode = false;
-
-  bool get isDarkMode => _isDarkMode;
-
   ThemeMode get themeMode => _isDarkMode ? ThemeMode.dark : ThemeMode.light;
+
   LanguageViewModel() {
     loadTheme();
     loadLocale();
