@@ -28,6 +28,7 @@ class AuthViewModel extends ChangeNotifier {
 
     if (isFirstLaunch == true) {
       await prefs.setBool('isFirstLaunch', false);
+      
     }
 
     notifyListeners();

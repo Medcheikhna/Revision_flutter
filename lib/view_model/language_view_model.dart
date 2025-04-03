@@ -7,9 +7,11 @@ class LanguageViewModel extends ChangeNotifier {
   Locale _locale = Locale(ui.window.locale.languageCode);
 
   Locale get locale => _locale;
-  ThemeMode _themeMode = ThemeMode.light;
+  bool _isDarkMode = false;
 
-  ThemeMode get themeMode => _themeMode;
+  bool get isDarkMode => _isDarkMode;
+
+  ThemeMode get themeMode => _isDarkMode ? ThemeMode.dark : ThemeMode.light;
   LanguageViewModel() {
     loadTheme();
     loadLocale();
@@ -37,16 +39,17 @@ class LanguageViewModel extends ChangeNotifier {
 
   Future<void> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final isDarkMode = prefs.getBool('isDarkMode') ?? false;
-    _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    // Get the stored value, defaulting to false (light mode) if not found
+    _isDarkMode = prefs.getBool('isDarkMode') ?? false;
     notifyListeners();
   }
 
   Future<void> toggleTheme() async {
-    _themeMode =
-        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    // Toggle the theme mode
+    _isDarkMode = !_isDarkMode;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', _themeMode == ThemeMode.dark);
+    await prefs.setBool('isDarkMode', _isDarkMode);
+
     notifyListeners();
   }
 }

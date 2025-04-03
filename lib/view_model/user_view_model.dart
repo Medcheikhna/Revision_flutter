@@ -41,7 +41,7 @@ class UserViewModel extends ChangeNotifier {
             user.email!.toLowerCase().contains(searchQuery))
         .toList();
   }
-
+ 
   Future<void> fetchUsers() async {
     if (isLoading) return;
 
