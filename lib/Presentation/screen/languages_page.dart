@@ -27,8 +27,8 @@ class Languages extends StatelessWidget {
                 child: Text('English'),
               ),
               ElevatedButton(
-                onPressed: () {
-                  languageService.setLocale(Locale('ar'));
+                onPressed: () async {
+                  await languageService.setLocale(Locale('ar'));
                   context.go('/');
                 },
                 child: Text('العربية'),
