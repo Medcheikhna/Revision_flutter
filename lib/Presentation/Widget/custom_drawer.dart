@@ -36,8 +36,8 @@ class CustomDrawer extends StatelessWidget {
               return ListTile(
                 leading: const Icon(Icons.brightness_6),
                 title: Text(AppLocalizations.of(context)!.changeTheme),
-                onTap: () {
-                  themChange.toggleTheme();
+                onTap: () async {
+                  await themChange.toggleTheme();
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Theme change coming soon!")),
                   );
@@ -102,15 +102,15 @@ class CustomDrawer extends StatelessWidget {
           children: [
             ListTile(
               title: const Text("English"),
-              onTap: () {
-                languageViewModel.setLocale(const Locale('en'));
+              onTap: () async {
+                await languageViewModel.setLocale(const Locale('en'));
                 Navigator.of(context).pop();
               },
             ),
             ListTile(
               title: const Text("العربية"),
-              onTap: () {
-                languageViewModel.setLocale(const Locale('ar'));
+              onTap: () async {
+                await languageViewModel.setLocale(const Locale('ar'));
                 Navigator.of(context).pop();
               },
             ),

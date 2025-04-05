@@ -22,14 +22,13 @@ class AuthViewModel extends ChangeNotifier {
   String? get token => _token;
   Auth? get currentAuth => _currentAuth;
   bool? isFirstLaunch;
-  
+
   Future<bool> checkAppStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isFirstLaunch = prefs.getBool('isFirstLaunch') ?? true;
 
     if (isFirstLaunch == true) {
       await prefs.setBool('isFirstLaunch', false);
-      
     }
 
     notifyListeners();

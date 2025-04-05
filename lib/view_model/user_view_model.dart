@@ -24,10 +24,12 @@ class UserViewModel extends ChangeNotifier {
   String searchQuery = "";
   bool isSearching = false;
   User? get selectedUser => _selectedUser;
+
   UserViewModel() {
     fetchUsers();
     searchController.addListener(_onSearchChanged);
   }
+
   void _onSearchChanged() {
     searchQuery = searchController.text.toLowerCase();
     notifyListeners();
@@ -41,7 +43,7 @@ class UserViewModel extends ChangeNotifier {
             user.email!.toLowerCase().contains(searchQuery))
         .toList();
   }
- 
+
   Future<void> fetchUsers() async {
     if (isLoading) return;
 

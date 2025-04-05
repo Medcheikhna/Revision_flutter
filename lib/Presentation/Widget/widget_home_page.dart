@@ -10,8 +10,6 @@ import '../../model/user_model.dart';
 
 class WidgetHomePage {
   static void show(BuildContext context, User user) {
-    print("==========ShowDialogue Page =====");
-
     showDialog(
       context: context,
       builder: (context) {

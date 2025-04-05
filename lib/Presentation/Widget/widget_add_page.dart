@@ -82,7 +82,7 @@ class WidgetAddPage extends StatelessWidget {
 
           // Add User Button
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (userViewModel.formKey.currentState!.validate()) {
                 final newUser = User(
                   username: userViewModel.usernameController.text,
@@ -93,7 +93,7 @@ class WidgetAddPage extends StatelessWidget {
                 EasyLoading.show(status: AppLocalizations.of(context)!.adding);
 
                 // Use UserViewModel to add user
-                userViewModel.addUser(newUser).then((_) {
+                await userViewModel.addUser(newUser).then((_) {
                   // Handle success or error after the addUser operation
                   if (userViewModel.successMessage != null) {
                     EasyLoading.dismiss();
