@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/app_routes.dart';
 import 'package:newtest/model/user_model.dart';
 
 import 'package:newtest/view_model/user_view_model.dart';
@@ -14,7 +15,7 @@ class WidgetAddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.read<UserViewModel>();
-
+    final localizations = AppLocalizations.of(context)!;
     return Form(
       key: userViewModel.formKey,
       child: Column(
@@ -90,7 +91,7 @@ class WidgetAddPage extends StatelessWidget {
                   name: userViewModel.nameController.text,
                   phone: userViewModel.phoneController.text,
                 );
-                EasyLoading.show(status: AppLocalizations.of(context)!.adding);
+                EasyLoading.show(status: localizations.adding);
 
                 // Use UserViewModel to add user
                 await userViewModel.addUser(newUser).then((_) {
@@ -99,16 +100,16 @@ class WidgetAddPage extends StatelessWidget {
                     EasyLoading.dismiss();
                     EasyLoading.showSuccess(
                         AppLocalizations.of(context)!.userAddedSuccessfully);
-                    context.go('/home'); // Navigate after success
+                    context.go(AppRoutes.home); // Navigate after success
                   } else if (userViewModel.errorMessage != null) {
                     EasyLoading.dismiss();
                     EasyLoading.showError(
-                        '${AppLocalizations.of(context)!.errorAddingUser} ${userViewModel.errorMessage!}');
+                        '${localizations.errorAddingUser} ${userViewModel.errorMessage!}');
                   }
                 });
               }
             },
-            child: Text(AppLocalizations.of(context)!.addUser),
+            child: Text(localizations.addUser),
           ),
         ],
       ),

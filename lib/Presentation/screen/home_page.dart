@@ -13,21 +13,21 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userViewModel = context.watch<UserViewModel>();
-
+    final localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: userViewModel.isSearching
             ? TextField(
                 controller: userViewModel.searchController,
                 decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.searchUser,
+                  hintText: localizations.searchUser,
                   border: InputBorder.none,
                   hintStyle: TextStyle(color: Colors.black),
                 ),
                 style: TextStyle(color: Colors.brown),
               )
             : Text(
-                AppLocalizations.of(context)!.userManagement,
+                localizations.userManagement,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
           IconButton(
             icon: Icon(userViewModel.isSearching ? Icons.close : Icons.search),
             onPressed: () {
-              userViewModel.toggleSearch(); 
+              userViewModel.toggleSearch();
             },
           ),
         ],
@@ -66,12 +66,12 @@ class MyHomePage extends StatelessWidget {
                             style: const TextStyle(color: Colors.white)),
                       ),
                       title: Text(
-                        "${AppLocalizations.of(context)!.name} ${user.username}",
+                        "${localizations.name} ${user.username}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       subtitle: Text(
-                        "${AppLocalizations.of(context)!.email} ${user.email}",
+                        "${localizations.email} ${user.email}",
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       trailing: const Icon(

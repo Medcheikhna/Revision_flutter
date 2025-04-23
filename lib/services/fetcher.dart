@@ -29,8 +29,11 @@ class Fetcher {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-
-        return Auth.fromJson(data);
+        final auth = Auth();
+        auth.fromJson(data);
+        print("====================this singlton auth====");
+        print(auth.username);
+        return auth;
       } else {
         throw Exception('Invalid credentials');
       }

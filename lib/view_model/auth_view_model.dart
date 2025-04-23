@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:newtest/model/auth.dart';
 import 'package:newtest/services/fetcher.dart';
 // Add this import
 import 'package:newtest/services/services_sharedpreference.dart';
@@ -15,12 +14,13 @@ class AuthViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
   String? _token;
-  Auth? _currentAuth;
 
+  bool _obscurePassword = true;
+  bool get obscurePassword => _obscurePassword;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   String? get token => _token;
-  Auth? get currentAuth => _currentAuth;
+
   bool? isFirstLaunch;
 
   Future<bool> checkAppStatus() async {
@@ -47,7 +47,7 @@ class AuthViewModel extends ChangeNotifier {
       if (response.token!.isNotEmpty) {
         _token = response.token;
         await SharedPrefs.saveToken(_token!);
-        _currentAuth = response;
+
         _isLoading = false;
         notifyListeners();
         return true;
@@ -64,10 +64,15 @@ class AuthViewModel extends ChangeNotifier {
     return false;
   }
 
+  void togglePasswordVisibility() {
+    _obscurePassword = !_obscurePassword;
+    notifyListeners();
+  }
+
   Future<void> logout() async {
     await SharedPrefs.removeToken();
     _token = null;
-    _currentAuth = null;
+
     notifyListeners();
   }
 }

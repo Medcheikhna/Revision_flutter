@@ -12,13 +12,14 @@ class UpdatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return WillPopScope(
       onWillPop: () async {
         context.go('/home');
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context)!.update)),
+        appBar: AppBar(title: Text(localizations.update)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: WidgetUpdatePage(),
