@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:newtest/app_routes.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -90,7 +91,7 @@ class MyHomePage extends StatelessWidget {
           userViewModel.usernameController.clear();
           userViewModel.phoneController.clear();
           userViewModel.nameController.clear();
-          context.push('/add_user');
+          context.go(AppRoutes.addUser);
         },
         child: const Icon(Icons.add),
       ),
